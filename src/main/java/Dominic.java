@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Dominic {
     public static void main(String[] args) {
-        String greet = "Hello! I'm\n"
+        String greet = "Sup! I'm\n"
             + " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
             + "------. .----------------.  .----------------. \n"
             + "| .--------------. || .--------------. || .--------------. || .--------------. || .----------"
@@ -39,7 +39,7 @@ public class Dominic {
                 for (int i = 1; i <= len; i++) {
                     System.out.println(i + "." + arr[i - 1]);
                 }
-            } else if (input.startsWith("mark") && (input.charAt(4) == ' ')) {
+            } else if (input.startsWith("mark ") && (input.length() > 5)) {
                 try {
                     int x = Integer.parseInt(input.substring(5));
                     Task[] arr = list.toTaskArray();
@@ -50,7 +50,7 @@ public class Dominic {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Error: Invalid number.");
                 }
-            } else if (input.startsWith("unmark") && (input.charAt(6) == ' ')) {
+            } else if (input.startsWith("unmark ") && (input.length() > 7)) {
                 try {
                     int x = Integer.parseInt(input.substring(7));
                     Task[] arr = list.toTaskArray();
@@ -61,9 +61,28 @@ public class Dominic {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Error: Invalid number.");
                 }
+            } else if (input.startsWith("todo ") && !input.substring(5).trim().isEmpty()) {
+                list.append(new ToDos(input.substring(5).trim()));
+                Task[] arr = list.toTaskArray();
+                int len = arr.length;
+                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+                System.out.println("Now you have " + len + " tasks pending.");
+            } else if (input.startsWith("deadline ") && !input.substring(9).trim().isEmpty()
+                    && input.contains(" /by ")) {
+                list.append(new Deadlines(input.trim().substring(9)));
+                Task[] arr = list.toTaskArray();
+                int len = arr.length;
+                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+                System.out.println("Now you have " + len + " tasks pending.");
+            } else if (input.startsWith("event ") && !input.substring(6).trim().isEmpty()
+                    && input.contains(" /from ") && input.contains(" /to ")) {
+                list.append(new Events(input.trim().substring(6)));
+                Task[] arr = list.toTaskArray();
+                int len = arr.length;
+                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+                System.out.println("Now you have " + len + " tasks pending.");
             } else {
-                list.append(new Task(input.trim()));
-                System.out.println("added: " + input);
+                System.out.println("Error: Invalid command.");
             }
             input = scanner.nextLine();
         }
