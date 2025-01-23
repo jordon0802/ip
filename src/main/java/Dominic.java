@@ -4,7 +4,7 @@ public class Dominic {
     public static void main(String[] args) {
         String greet = "Sup! I'm\n"
             + " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
-            + "------. .----------------.  .----------------. \n"
+            + "------. .----------------.  .----------------.\n"
             + "| .--------------. || .--------------. || .--------------. || .--------------. || .----------"
             + "----. || .--------------. || .--------------. |\n"
             + "| |  ________    | || |     ____     | || | ____    ____ | || |     _____    | || | ____  ___"
@@ -24,7 +24,7 @@ public class Dominic {
             + "| '--------------' || '--------------' || '--------------' || '--------------' || '----------"
             + "----' || '--------------' || '--------------' |\n"
             + " '----------------'  '----------------'  '----------------'  '----------------'  '------------"
-            + "----'  '----------------'  '----------------' \n"
+            + "----'  '----------------'  '----------------'\n"
             + "What can I do for you?";
         System.out.println(greet);
 
@@ -66,21 +66,21 @@ public class Dominic {
                 Task[] arr = list.toTaskArray();
                 int len = arr.length;
                 System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " tasks pending.");
+                System.out.println("Now you have " + len + " task(s) pending.");
             } else if (input.startsWith("deadline ") && !input.substring(9).trim().isEmpty()
                     && input.contains(" /by ")) {
                 list.append(new Deadlines(input.trim().substring(9)));
                 Task[] arr = list.toTaskArray();
                 int len = arr.length;
                 System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " tasks pending.");
+                System.out.println("Now you have " + len + " task(s) pending.");
             } else if (input.startsWith("event ") && !input.substring(6).trim().isEmpty()
                     && input.contains(" /from ") && input.contains(" /to ")) {
                 list.append(new Events(input.trim().substring(6)));
                 Task[] arr = list.toTaskArray();
                 int len = arr.length;
                 System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " tasks pending.");
+                System.out.println("Now you have " + len + " task(s) pending.");
             } else {
                 System.out.println("Error: Invalid command.");
             }
