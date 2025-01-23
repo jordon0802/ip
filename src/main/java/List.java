@@ -1,22 +1,22 @@
 import java.util.LinkedList;
 
 public class List {
-    LinkedList<String> list;
+    private LinkedList<Task> list;
 
     public List() {
-        list = new LinkedList<>();
+        this.list = new LinkedList<>();
     }
 
-    public void append(String s) {
-        list.add(s);
+    public void append(Task t) {
+        this.list.add(t);
     }
 
-    public String[] toStringArray() {
-        if (list != null) {
-            String[] temp = new String[list.size()];
-            return list.toArray(temp);
+    public Task[] toTaskArray() {
+        if (this.list != null) {
+            Task[] temp = new Task[this.list.size()];
+            return this.list.toArray(temp);
         } else {
-            return new String[0];
+            return new Task[0];
         }
     }
 }
