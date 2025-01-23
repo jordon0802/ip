@@ -1,13 +1,13 @@
 public class Task {
-    private String task;
+    protected final String task;
     private boolean isMarked;
 
-    public Task(String task) {
+    protected Task(String task) {
         this.task = task;
         this.isMarked = false;
     }
 
-    public boolean isMarked() {
+    protected boolean isMarked() {
         return this.isMarked;
     }
 
@@ -21,6 +21,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return task == null ? "" : (this.isMarked ? "[x] " : "[ ] ") + this.task;
+        return (this.isMarked ? "[x] " : "[ ] ") + this.task;
     }
 }
