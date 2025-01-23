@@ -1,0 +1,15 @@
+hi
+todo
+todo do laundry
+deadline
+deadline test
+deadline assignment /by 2359hrs
+event lecture /from 2pm /to 4pm
+list
+mark 1
+mark 3
+list
+unmark 3
+list
+mark 4
+bye
