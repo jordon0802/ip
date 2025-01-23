@@ -34,13 +34,35 @@ public class Dominic {
         String input = scanner.nextLine();
         while (!input.equalsIgnoreCase("bye")) {
             if (input.equalsIgnoreCase("list")) {
-                String[] arr = list.toStringArray();
+                Task[] arr = list.toTaskArray();
                 int len = arr.length;
                 for (int i = 1; i <= len; i++) {
-                    System.out.println(i + ". " + arr[i - 1]);
+                    System.out.println(i + "." + arr[i - 1]);
+                }
+            } else if (input.startsWith("mark") && (input.charAt(4) == ' ')) {
+                try {
+                    int x = Integer.parseInt(input.substring(5));
+                    Task[] arr = list.toTaskArray();
+                    arr[x - 1].setMarked();
+                    System.out.println("Ok, bet, marked it:\n" + arr[x - 1]);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
+                }
+            } else if (input.startsWith("unmark") && (input.charAt(6) == ' ')) {
+                try {
+                    int x = Integer.parseInt(input.substring(7));
+                    Task[] arr = list.toTaskArray();
+                    arr[x - 1].setUnMarked();
+                    System.out.println("Ok, bet, unmarked it:\n" + arr[x - 1]);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
                 }
             } else {
-                list.append(input);
+                list.append(new Task(input.trim()));
                 System.out.println("added: " + input);
             }
             input = scanner.nextLine();
