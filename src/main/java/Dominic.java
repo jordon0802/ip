@@ -1,3 +1,6 @@
+import exceptions.InvalidKeywordException;
+import exceptions.MissingArgumentException;
+
 import java.util.Scanner;
 
 public class Dominic {
@@ -32,7 +35,10 @@ public class Dominic {
 
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
+
         while (!input.equalsIgnoreCase("bye")) {
+
+
             if (input.equalsIgnoreCase("list")) {
                 Task[] arr = list.toTaskArray();
                 int len = arr.length;
@@ -61,32 +67,64 @@ public class Dominic {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Error: Invalid number.");
                 }
-            } else if (input.startsWith("todo ") && !input.substring(5).trim().isEmpty()) {
-                list.append(new ToDos(input.substring(5).trim()));
-                Task[] arr = list.toTaskArray();
-                int len = arr.length;
-                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " task(s) pending.");
-            } else if (input.startsWith("deadline ") && !input.substring(9).trim().isEmpty()
-                    && input.contains(" /by ")) {
-                list.append(new Deadlines(input.trim().substring(9)));
-                Task[] arr = list.toTaskArray();
-                int len = arr.length;
-                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " task(s) pending.");
-            } else if (input.startsWith("event ") && !input.substring(6).trim().isEmpty()
-                    && input.contains(" /from ") && input.contains(" /to ")) {
-                list.append(new Events(input.trim().substring(6)));
-                Task[] arr = list.toTaskArray();
-                int len = arr.length;
-                System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
-                System.out.println("Now you have " + len + " task(s) pending.");
+            } else if (input.startsWith("todo ")) {
+                try {
+                    String arg = input.substring(5).trim();
+                    if (arg.isEmpty()) {
+                        throw new MissingArgumentException("");
+                    }
+                    list.append(new ToDos(arg));
+                    Dominic.printRecentlyAdded(list);
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("Eh? What do you need to do?");
+                }
+            } else if (input.startsWith("deadline ")) {
+                try {
+                    String arg = input.substring(9).trim();
+                    if (arg.isEmpty()) {
+                        throw new MissingArgumentException("");
+                    }
+                    Dominic.checkKeyword(input, " /by ");
+                    list.append(new Deadlines(arg));
+                    Dominic.printRecentlyAdded(list);
+                } catch (InvalidKeywordException e) {
+                    System.out.println("When u need it done by? " + e.getMessage());
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
+                }
+            } else if (input.startsWith("event ")) {
+                try {
+                    String arg = input.substring(6).trim();
+                    if (arg.isEmpty()) {
+                        throw new MissingArgumentException("");
+                    }
+                    Dominic.checkKeyword(input, " /from ");
+                    Dominic.checkKeyword(input, " /to ");
+                    list.append(new Events(arg));
+                    Dominic.printRecentlyAdded(list);
+                } catch (InvalidKeywordException e) {
+                    System.out.println("When is the event? " + e.getMessage());
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
+                }
             } else {
                 System.out.println("Error: Invalid command.");
             }
             input = scanner.nextLine();
         }
-
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    private static void checkKeyword(String arg, String kw) throws InvalidKeywordException {
+        if (!arg.contains(kw) || (arg.substring(arg.indexOf(kw) + kw.length()).trim().isEmpty())) {
+            throw new InvalidKeywordException("(Use" + kw + "to specify.)");
+        }
+    }
+
+    private static void printRecentlyAdded(List list) {
+        Task[] arr = list.toTaskArray();
+        int len = arr.length;
+        System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+        System.out.println("Now you have " + len + " task(s) pending.");
     }
 }
