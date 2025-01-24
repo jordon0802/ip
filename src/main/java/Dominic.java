@@ -1,4 +1,5 @@
 import exceptions.InvalidKeywordException;
+import exceptions.InvalidKeywordOrderException;
 import exceptions.MissingArgumentException;
 
 import java.util.Scanner;
@@ -37,13 +38,21 @@ public class Dominic {
         String input = scanner.nextLine();
 
         while (!input.equalsIgnoreCase("bye")) {
-
-
             if (input.equalsIgnoreCase("list")) {
                 Task[] arr = list.toTaskArray();
                 int len = arr.length;
                 for (int i = 1; i <= len; i++) {
                     System.out.println(i + "." + arr[i - 1]);
+                }
+            } else if (input.startsWith("delete ") && (input.length() > 7)) {
+                try {
+                    int x = Integer.parseInt(input.substring(7));
+                    Task task = list.remove(x - 1);
+                    Dominic.printRecentlyDeleted(list, task);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
                 }
             } else if (input.startsWith("mark ") && (input.length() > 5)) {
                 try {
@@ -100,12 +109,17 @@ public class Dominic {
                     }
                     Dominic.checkKeyword(input, " /from ");
                     Dominic.checkKeyword(input, " /to ");
+                    if (input.indexOf(" /to ") < input.lastIndexOf(" /from ")) {
+                        throw new InvalidKeywordOrderException("");
+                    }
                     list.append(new Events(arg));
                     Dominic.printRecentlyAdded(list);
                 } catch (InvalidKeywordException e) {
                     System.out.println("When is the event? " + e.getMessage());
                 } catch (IndexOutOfBoundsException | MissingArgumentException e) {
                     System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
+                } catch (InvalidKeywordOrderException e) {
+                    System.out.println("Invalid keyword order! (Usage: event <text> /from <from> /to <to>)");
                 }
             } else {
                 System.out.println("Error: Invalid command.");
@@ -125,6 +139,13 @@ public class Dominic {
         Task[] arr = list.toTaskArray();
         int len = arr.length;
         System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+        System.out.println("Now you have " + len + " task(s) pending.");
+    }
+
+    private static void printRecentlyDeleted(List list, Task task) {
+        Task[] arr = list.toTaskArray();
+        int len = arr.length;
+        System.out.println("Got it, deleted task:\n\t" + task.toString());
         System.out.println("Now you have " + len + " task(s) pending.");
     }
 }

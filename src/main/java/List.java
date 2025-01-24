@@ -11,6 +11,10 @@ public class List {
         this.list.add(t);
     }
 
+    public Task remove(int i) {
+        return this.list.remove(i);
+    }
+
     public Task[] toTaskArray() {
         if (this.list != null) {
             Task[] temp = new Task[this.list.size()];
