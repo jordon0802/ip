@@ -2,54 +2,69 @@ import exceptions.InvalidKeywordException;
 import exceptions.InvalidKeywordOrderException;
 import exceptions.MissingArgumentException;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Dominic {
+    private enum Command {
+        LIST,
+        DELETE,
+        MARK,
+        UNMARK,
+        TODOS,
+        DEADLINES,
+        EVENTS,
+        INVALID
+    }
+
     private enum Marker {
         MARK,
         UNMARK
     }
 
+    private static final File DIR = new File("./data/");
+    private static final File DB = new File("./data/dominic.txt");
+
     public static void main(String[] args) {
-        enum Command {
-            LIST,
-            DELETE,
-            MARK,
-            UNMARK,
-            TODOS,
-            DEADLINES,
-            EVENTS,
-            INVALID
+        try {
+            // Case 1: Valid File and Directory
+            if (DIR.isDirectory() && DB.isFile()) {
+                // Load file data to List
+                List.fileToList(DB);
+            }
+            // Case 2a: Missing Directory, attempt to Create Directory
+            if (!DIR.isDirectory()) {
+                System.out.println("data directory not found.");
+                System.out.println("Creating data directory...");
+                boolean result = DIR.mkdir();
+                if (result) {
+                    System.out.println("Data directory created.");
+                } else {
+                    System.out.println("Error: Failed to create ./data directory.");
+                }
+            }
+            // Case 2b: Missing File, attempt to Create File
+            if (!DB.isFile()) {
+                System.out.println("dominic.txt not found.");
+                System.out.println("Creating dominic.txt...");
+                boolean result = DB.createNewFile();
+                if (result) {
+                    System.out.println("dominic.txt created.");
+                } else {
+                    System.out.println("Error: dominic.txt already exists.");
+                }
+            }
+        } catch (SecurityException e) {
+            System.out.println("Error: Failed to read/create data directory and/or dominic.txt file.");
+        } catch (IOException e) {
+            System.out.println("Error: IOException while creating dominic.txt file.");
         }
 
-        String greet = "Sup! I'm\n"
-            + " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
-            + "------. .----------------.  .----------------.\n"
-            + "| .--------------. || .--------------. || .--------------. || .--------------. || .----------"
-            + "----. || .--------------. || .--------------. |\n"
-            + "| |  ________    | || |     ____     | || | ____    ____ | || |     _____    | || | ____  ___"
-            + "__  | || |     _____    | || |     ______   | |\n"
-            + "| | |_   ___ `.  | || |   .'    `.   | || ||_   \\  /   _|| || |    |_   _|   | || ||_   \\|_"
-            + "   _| | || |    |_   _|   | || |   .' ___  |  | |\n"
-            + "| |   | |   `. \\ | || |  /  .--.  \\  | || |  |   \\/   |  | || |      | |     | || |  |"
-            + "   \\ | |   | || |      | |     | || |  / .'   \\_|  | |\n"
-            + "| |   | |    | | | || |  | |    | |  | || |  | |\\  /| |  | || |      | |     | || |  | |\\"
-            + " \\| |   | || |      | |     | || |  | |         | |\n"
-            + "| |  _| |___.' / | || |  \\  `--'  /  | || | _| |_\\/_| |_ | || |     _| |_    | || | _| |_\\"
-            + "   |_  | || |     _| |_    | || |  \\ `.___.'\\  | |\n"
-            + "| | |________.'  | || |   `.____.'   | || ||_____||_____|| || |    |_____|   | || ||_____|\\_"
-            + "___| | || |    |_____|   | || |   `._____.'  | |\n"
-            + "| |              | || |              | || |              | || |              | || |          "
-            + "    | || |              | || |              | |\n"
-            + "| '--------------' || '--------------' || '--------------' || '--------------' || '----------"
-            + "----' || '--------------' || '--------------' |\n"
-            + " '----------------'  '----------------'  '----------------'  '----------------'  '------------"
-            + "----'  '----------------'  '----------------'\n"
-            + "What can I do for you?";
-        System.out.println(greet);
+        // Greet message
+        Dominic.greet();
 
-        List list = new List();
-
+        // Initialize Scanner to receive commands
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
@@ -73,10 +88,9 @@ public class Dominic {
                 command = Command.INVALID;
             }
 
-
             switch (command) {
                 case LIST:
-                    Task[] arr = list.toTaskArray();
+                    Task[] arr = List.toTaskArray();
                     int len = arr.length;
                     for (int i = 1; i <= len; i++) {
                         System.out.println(i + "." + arr[i - 1]);
@@ -85,8 +99,8 @@ public class Dominic {
                 case DELETE:
                     try {
                         int x = Integer.parseInt(input.substring(7));
-                        Task task = list.remove(x - 1);
-                        Dominic.printRecentlyDeleted(list, task);
+                        Task task = List.remove(x - 1);
+                        Dominic.printRecentlyDeleted(task);
                     } catch (NumberFormatException e) {
                         System.out.println("Error: Invalid arguments.");
                     } catch (IndexOutOfBoundsException e) {
@@ -95,7 +109,7 @@ public class Dominic {
                     break;
                 case MARK:
                     try {
-                        Dominic.marker(Marker.MARK, input, list);
+                        Dominic.marker(Marker.MARK, input);
                     } catch (NumberFormatException e) {
                         System.out.println("Error: Invalid arguments.");
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -104,7 +118,7 @@ public class Dominic {
                     break;
                 case UNMARK:
                     try {
-                        Dominic.marker(Marker.UNMARK, input, list);
+                        Dominic.marker(Marker.UNMARK, input);
                     } catch (NumberFormatException e) {
                         System.out.println("Error: Invalid arguments.");
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -113,57 +127,29 @@ public class Dominic {
                     break;
                 case TODOS:
                     try {
-                        String arg = input.substring(5).trim();
-                        if (arg.isEmpty()) {
-                            throw new MissingArgumentException("");
-                        }
-                        list.append(new ToDos(arg));
-                        Dominic.printRecentlyAdded(list);
+                        String todoVal = ToDos.getValidToDo(input.substring(5).trim());
+                        List.append(new ToDos(todoVal));
+                        Dominic.printRecentlyAdded();
                     } catch (IndexOutOfBoundsException | MissingArgumentException e) {
                         System.out.println("Eh? What do you need to do?");
                     }
                     break;
                 case DEADLINES:
                     try {
-                        String arg = input.substring(9).trim();
-                        if (arg.isEmpty()) {
-                            throw new MissingArgumentException("");
-                        }
-                        Dominic.checkKeyword(input, " /by ");
-                        if (arg.substring(0, arg.indexOf(" /by ")).trim().isEmpty() || arg.indexOf(" /by ") == 0) {
-                            throw new MissingArgumentException("");
-                        }
-
-                        String task = arg.substring(0, arg.indexOf(" /by "));
-                        String deadline = arg.substring(arg.indexOf(" /by ") + 5);
-                        list.append(new Deadlines(task, deadline));
-                        Dominic.printRecentlyAdded(list);
+                        String[] deadlineVals = Deadlines.getValidDeadline(input.substring(9).trim());
+                        List.append(new Deadlines(deadlineVals[0], deadlineVals[1]));
+                        Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
-                        System.out.println("When u need it done by? " + e.getMessage());
+                        System.out.println("When u need it done by? ");
                     } catch (IndexOutOfBoundsException | MissingArgumentException e) {
                         System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
                     }
                     break;
                 case EVENTS:
                     try {
-                        String arg = input.substring(6).trim();
-                        if (arg.isEmpty()) {
-                            throw new MissingArgumentException("");
-                        }
-                        Dominic.checkKeyword(input, " /from ");
-                        Dominic.checkKeyword(input, " /to ");
-                        if (input.indexOf(" /to ") < input.lastIndexOf(" /from ")) {
-                            throw new InvalidKeywordOrderException("");
-                        }
-                        if (arg.substring(0, arg.indexOf(" /from ")).trim().isEmpty() || arg.indexOf(" /from ") == 0) {
-                            throw new MissingArgumentException("");
-                        }
-
-                        String task = arg.substring(0, arg.indexOf(" /from "));
-                        String from = arg.substring(arg.indexOf(" /from ") + 7, arg.indexOf(" /to "));
-                        String to = arg.substring(arg.indexOf(" /to ") + 5);
-                        list.append(new Events(task, from, to));
-                        Dominic.printRecentlyAdded(list);
+                        String[] eventVals = Events.getValidEvent(input.substring(6).trim());
+                        List.append(new Events(eventVals[0], eventVals[1], eventVals[2]));
+                        Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
                         System.out.println("When is the event? " + e.getMessage());
                     } catch (IndexOutOfBoundsException | MissingArgumentException e) {
@@ -177,42 +163,65 @@ public class Dominic {
             }
             input = scanner.nextLine();
         }
+        List.writeToFile(DB);
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    private static void checkKeyword(String arg, String kw) throws InvalidKeywordException {
-        if (!arg.contains(kw) || (arg.substring(arg.indexOf(kw) + kw.length()).trim().isEmpty())) {
-            throw new InvalidKeywordException("(Use" + kw + "to specify.)");
-        }
+    private static void greet() {
+        String message = "Sup! I'm\n"
+                + " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
+                + "------. .----------------.  .----------------.\n"
+                + "| .--------------. || .--------------. || .--------------. || .--------------. || .----------"
+                + "----. || .--------------. || .--------------. |\n"
+                + "| |  ________    | || |     ____     | || | ____    ____ | || |     _____    | || | ____  ___"
+                + "__  | || |     _____    | || |     ______   | |\n"
+                + "| | |_   ___ `.  | || |   .'    `.   | || ||_   \\  /   _|| || |    |_   _|   | || ||_   \\|_"
+                + "   _| | || |    |_   _|   | || |   .' ___  |  | |\n"
+                + "| |   | |   `. \\ | || |  /  .--.  \\  | || |  |   \\/   |  | || |      | |     | || |  |"
+                + "   \\ | |   | || |      | |     | || |  / .'   \\_|  | |\n"
+                + "| |   | |    | | | || |  | |    | |  | || |  | |\\  /| |  | || |      | |     | || |  | |\\"
+                + " \\| |   | || |      | |     | || |  | |         | |\n"
+                + "| |  _| |___.' / | || |  \\  `--'  /  | || | _| |_\\/_| |_ | || |     _| |_    | || | _| |_\\"
+                + "   |_  | || |     _| |_    | || |  \\ `.___.'\\  | |\n"
+                + "| | |________.'  | || |   `.____.'   | || ||_____||_____|| || |    |_____|   | || ||_____|\\_"
+                + "___| | || |    |_____|   | || |   `._____.'  | |\n"
+                + "| |              | || |              | || |              | || |              | || |          "
+                + "    | || |              | || |              | |\n"
+                + "| '--------------' || '--------------' || '--------------' || '--------------' || '----------"
+                + "----' || '--------------' || '--------------' |\n"
+                + " '----------------'  '----------------'  '----------------'  '----------------'  '------------"
+                + "----'  '----------------'  '----------------'\n"
+                + "What can I do for you?";
+        System.out.println(message);
     }
 
-    private static void marker(Marker func, String input, List list) throws NumberFormatException,
+    private static void marker(Marker func, String input) throws NumberFormatException,
             IndexOutOfBoundsException {
         switch (func) {
             case MARK:
                 int x = Integer.parseInt(input.substring(5));
-                Task[] arr = list.toTaskArray();
+                Task[] arr = List.toTaskArray();
                 arr[x - 1].setMarked();
                 System.out.println("Ok, bet, marked it:\n" + arr[x - 1]);
                 break;
             case UNMARK:
                 int y = Integer.parseInt(input.substring(7));
-                Task[] arr1 = list.toTaskArray();
+                Task[] arr1 = List.toTaskArray();
                 arr1[y - 1].setUnMarked();
                 System.out.println("Ok, bet, unmarked it:\n" + arr1[y - 1]);
                 break;
         }
     }
 
-    private static void printRecentlyAdded(List list) {
-        Task[] arr = list.toTaskArray();
+    private static void printRecentlyAdded() {
+        Task[] arr = List.toTaskArray();
         int len = arr.length;
         System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
         System.out.println("Now you have " + len + " task(s) pending.");
     }
 
-    private static void printRecentlyDeleted(List list, Task task) {
-        Task[] arr = list.toTaskArray();
+    private static void printRecentlyDeleted(Task task) {
+        Task[] arr = List.toTaskArray();
         int len = arr.length;
         System.out.println("Got it, deleted task:\n\t" + task.toString());
         System.out.println("Now you have " + len + " task(s) pending.");
