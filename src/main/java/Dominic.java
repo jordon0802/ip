@@ -1,3 +1,4 @@
+import exceptions.InvalidDateOrderException;
 import exceptions.InvalidKeywordException;
 import exceptions.InvalidKeywordOrderException;
 import exceptions.MissingArgumentException;
@@ -147,7 +148,6 @@ public class Dominic {
                             List.append(new Deadlines(task, dateDeadline));
                         } else {
                             List.append(new Deadlines(task, deadline));
-
                         }
                         Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
@@ -166,6 +166,9 @@ public class Dominic {
                         if (Dominic.isLocalDate(from) && Dominic.isLocalDate(to)) {
                             dateFrom = Dominic.toLocalDate(from);
                             dateTo = Dominic.toLocalDate(to);
+                            if (dateFrom.isAfter(dateTo)) {
+                                throw new InvalidDateOrderException("");
+                            }
                             List.append(new Events(task, dateFrom, dateTo));
                         } else if (Dominic.isLocalDate(from)) {
                             dateFrom = Dominic.toLocalDate(from);
@@ -178,11 +181,13 @@ public class Dominic {
                         }
                         Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
-                        System.out.println("When is the event? " + e.getMessage());
+                        System.out.println("When is the event? ");
                     } catch (IndexOutOfBoundsException | MissingArgumentException e) {
                         System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
                     } catch (InvalidKeywordOrderException e) {
                         System.out.println("Invalid keyword order! (Usage: event <text> /from <from> /to <to>)");
+                    } catch (InvalidDateOrderException e) {
+                        System.out.println("Eh? How can end date be earlier than start date!");
                     }
                     break;
                 default:
