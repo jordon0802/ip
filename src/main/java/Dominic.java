@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dominic {
     private enum Command {
         LIST,
+        FILTER,
         DELETE,
         MARK,
         UNMARK,
@@ -76,6 +78,8 @@ public class Dominic {
             Command command;
             if (input.equalsIgnoreCase("list")) {
                 command = Command.LIST;
+            } else if (input.startsWith("filter ") && (input.length() > 7)) {
+                command = Command.FILTER;
             } else if (input.startsWith("delete ") && (input.length() > 7)) {
                 command = Command.DELETE;
             } else if (input.startsWith("mark ") && (input.length() > 5)) {
@@ -93,105 +97,130 @@ public class Dominic {
             }
 
             switch (command) {
-                case LIST:
-                    Task[] arr = List.toTaskArray();
-                    int len = arr.length;
-                    for (int i = 1; i <= len; i++) {
-                        System.out.println(i + "." + arr[i - 1]);
-                    }
-                    break;
-                case DELETE:
-                    try {
-                        int x = Integer.parseInt(input.substring(7));
-                        Task task = List.remove(x - 1);
-                        Dominic.printRecentlyDeleted(task);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Error: Invalid arguments.");
-                    } catch (IndexOutOfBoundsException e) {
-                        System.out.println("Error: Invalid number.");
-                    }
-                    break;
-                case MARK:
-                    try {
-                        Dominic.marker(Marker.MARK, input);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Error: Invalid arguments.");
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Error: Invalid number.");
-                    }
-                    break;
-                case UNMARK:
-                    try {
-                        Dominic.marker(Marker.UNMARK, input);
-                    } catch (NumberFormatException e) {
-                        System.out.println("Error: Invalid arguments.");
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Error: Invalid number.");
-                    }
-                    break;
-                case TODOS:
-                    try {
-                        String todoVal = ToDos.getValidTask(input.substring(5).trim());
-                        List.append(new ToDos(todoVal));
-                        Dominic.printRecentlyAdded();
-                    } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-                        System.out.println("Eh? What do you need to do?");
-                    }
-                    break;
-                case DEADLINES:
-                    try {
-                        String task = Deadlines.getValidTask(input.substring(9).trim());
-                        String deadline = Deadlines.getValidDeadline(input.substring(9).trim());
-                        LocalDate dateDeadline;
-                        if (Dominic.isLocalDate(deadline)) {
-                            dateDeadline = Dominic.toLocalDate(deadline);
-                            List.append(new Deadlines(task, dateDeadline));
-                        } else {
-                            List.append(new Deadlines(task, deadline));
-                        }
-                        Dominic.printRecentlyAdded();
-                    } catch (InvalidKeywordException e) {
-                        System.out.println("When u need it done by? ");
-                    } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-                        System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
-                    }
-                    break;
-                case EVENTS:
-                    try {
-                        String task = Events.getValidTask(input.substring(6).trim());
-                        String from = Events.getValidFrom(input.substring(6).trim());
-                        String to = Events.getValidTo(input.substring(6).trim());
-                        LocalDate dateFrom;
-                        LocalDate dateTo;
-                        if (Dominic.isLocalDate(from) && Dominic.isLocalDate(to)) {
-                            dateFrom = Dominic.toLocalDate(from);
-                            dateTo = Dominic.toLocalDate(to);
-                            if (dateFrom.isAfter(dateTo)) {
-                                throw new InvalidDateOrderException("");
+            case LIST:
+                Task[] arr = List.toTaskArray();
+                int len = arr.length;
+                for (int i = 1; i <= len; i++) {
+                    System.out.println(i + "." + arr[i - 1]);
+                }
+                break;
+            case FILTER:
+                if (Dominic.isLocalDate(input.substring(7).trim())) {
+                    LocalDate date = Dominic.toLocalDate(input.substring(7).trim());
+                    Task[] list = List.toTaskArray();
+                    int length = list.length;
+                    int counter = 1;
+                    for (int i = 1; i <= length; i++) {
+                        if (list[i - 1] instanceof Deadlines d) {
+                            if (d.isDateDeadline() && (d.getDateDeadline().isEqual(date))) {
+                                System.out.println(counter + "." + d);
+                                counter++;
                             }
-                            List.append(new Events(task, dateFrom, dateTo));
-                        } else if (Dominic.isLocalDate(from)) {
-                            dateFrom = Dominic.toLocalDate(from);
-                            List.append(new Events(task, dateFrom, to));
-                        } else if (Dominic.isLocalDate(to)) {
-                            dateTo = Dominic.toLocalDate(to);
-                            List.append(new Events(task, from, dateTo));
-                        } else {
-                            List.append(new Events(task, from, to));
+                        } else if (list[i - 1] instanceof Events e) {
+                            if ((e.isDateFrom() && e.isDateTo())
+                                    && (e.getDateFrom().isEqual(date) || e.getDateFrom().isBefore(date))
+                                    && (e.getDateTo().isEqual(date) || e.getDateTo().isAfter(date))) {
+                                System.out.println(counter + "." + e);
+                                counter++;
+                            }
                         }
-                        Dominic.printRecentlyAdded();
-                    } catch (InvalidKeywordException e) {
-                        System.out.println("When is the event? ");
-                    } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-                        System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
-                    } catch (InvalidKeywordOrderException e) {
-                        System.out.println("Invalid keyword order! (Usage: event <text> /from <from> /to <to>)");
-                    } catch (InvalidDateOrderException e) {
-                        System.out.println("Eh? How can end date be earlier than start date!");
                     }
-                    break;
-                default:
-                    System.out.println("Error: Invalid command.");
+                } else {
+                    System.out.println("Error: Invalid date format.");
+                }
+                break;
+            case DELETE:
+                try {
+                    int x = Integer.parseInt(input.substring(7));
+                    Task task = List.remove(x - 1);
+                    Dominic.printRecentlyDeleted(task);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
+                }
+                break;
+            case MARK:
+                try {
+                    Dominic.marker(Marker.MARK, input);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
+                }
+                break;
+            case UNMARK:
+                try {
+                    Dominic.marker(Marker.UNMARK, input);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid arguments.");
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("Error: Invalid number.");
+                }
+                break;
+            case TODOS:
+                try {
+                    String todoVal = ToDos.getValidTask(input.substring(5).trim());
+                    List.append(new ToDos(todoVal));
+                    Dominic.printRecentlyAdded();
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("Eh? What do you need to do?");
+                }
+                break;
+            case DEADLINES:
+                try {
+                    String task = Deadlines.getValidTask(input.substring(9).trim());
+                    String deadline = Deadlines.getValidDeadline(input.substring(9).trim());
+                    LocalDate dateDeadline;
+                    if (Dominic.isLocalDate(deadline)) {
+                        dateDeadline = Dominic.toLocalDate(deadline);
+                        List.append(new Deadlines(task, dateDeadline));
+                    } else {
+                        List.append(new Deadlines(task, deadline));
+                    }
+                    Dominic.printRecentlyAdded();
+                } catch (InvalidKeywordException e) {
+                    System.out.println("When u need it done by? ");
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
+                }
+                break;
+            case EVENTS:
+                try {
+                    String task = Events.getValidTask(input.substring(6).trim());
+                    String from = Events.getValidFrom(input.substring(6).trim());
+                    String to = Events.getValidTo(input.substring(6).trim());
+                    LocalDate dateFrom;
+                    LocalDate dateTo;
+                    if (Dominic.isLocalDate(from) && Dominic.isLocalDate(to)) {
+                        dateFrom = Dominic.toLocalDate(from);
+                        dateTo = Dominic.toLocalDate(to);
+                        if (dateFrom.isAfter(dateTo)) {
+                            throw new InvalidDateOrderException("");
+                        }
+                        List.append(new Events(task, dateFrom, dateTo));
+                    } else if (Dominic.isLocalDate(from)) {
+                        dateFrom = Dominic.toLocalDate(from);
+                        List.append(new Events(task, dateFrom, to));
+                    } else if (Dominic.isLocalDate(to)) {
+                        dateTo = Dominic.toLocalDate(to);
+                        List.append(new Events(task, from, dateTo));
+                    } else {
+                        List.append(new Events(task, from, to));
+                    }
+                    Dominic.printRecentlyAdded();
+                } catch (InvalidKeywordException e) {
+                    System.out.println("When is the event? ");
+                } catch (IndexOutOfBoundsException | MissingArgumentException e) {
+                    System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
+                } catch (InvalidKeywordOrderException e) {
+                    System.out.println("Invalid keyword order! (Usage: event <text> /from <from> /to <to>)");
+                } catch (InvalidDateOrderException e) {
+                    System.out.println("Eh? How can end date be earlier than start date!");
+                }
+                break;
+            default:
+                System.out.println("Error: Invalid command.");
             }
             input = scanner.nextLine();
         }

@@ -6,17 +6,20 @@ import java.time.LocalDate;
 public class Deadlines extends Task {
     private final String stringDeadline;
     private final LocalDate dateDeadline;
+    private final boolean isDateDeadline;
 
     public Deadlines(String task, String deadline) {
         super(task);
         this.stringDeadline = deadline;
         this.dateDeadline = null;
+        this.isDateDeadline = false;
     }
 
     public Deadlines(String task, LocalDate deadline) {
         super(task);
         this.stringDeadline = null;
         this.dateDeadline = deadline;
+        this.isDateDeadline = true;
     }
 
     private static void checkValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
@@ -29,6 +32,10 @@ public class Deadlines extends Task {
         }
     }
 
+    public LocalDate getDateDeadline() {
+        return this.dateDeadline;
+    }
+
     public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
         Deadlines.checkValidTask(input);
         return input.substring(0, input.indexOf(" /by "));
@@ -37,6 +44,10 @@ public class Deadlines extends Task {
     public static String getValidDeadline(String input) throws MissingArgumentException, InvalidKeywordException {
         Deadlines.checkValidTask(input);
         return input.substring(input.indexOf(" /by ") + 5);
+    }
+
+    public boolean isDateDeadline() {
+        return this.isDateDeadline;
     }
 
     @Override
