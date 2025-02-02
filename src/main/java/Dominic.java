@@ -4,6 +4,9 @@ import exceptions.MissingArgumentException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Dominic {
@@ -127,7 +130,7 @@ public class Dominic {
                     break;
                 case TODOS:
                     try {
-                        String todoVal = ToDos.getValidToDo(input.substring(5).trim());
+                        String todoVal = ToDos.getValidTask(input.substring(5).trim());
                         List.append(new ToDos(todoVal));
                         Dominic.printRecentlyAdded();
                     } catch (IndexOutOfBoundsException | MissingArgumentException e) {
@@ -136,8 +139,16 @@ public class Dominic {
                     break;
                 case DEADLINES:
                     try {
-                        String[] deadlineVals = Deadlines.getValidDeadline(input.substring(9).trim());
-                        List.append(new Deadlines(deadlineVals[0], deadlineVals[1]));
+                        String task = Deadlines.getValidTask(input.substring(9).trim());
+                        String deadline = Deadlines.getValidDeadline(input.substring(9).trim());
+                        LocalDate dateDeadline;
+                        if (Dominic.isLocalDate(deadline)) {
+                            dateDeadline = Dominic.toLocalDate(deadline);
+                            List.append(new Deadlines(task, dateDeadline));
+                        } else {
+                            List.append(new Deadlines(task, deadline));
+
+                        }
                         Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
                         System.out.println("When u need it done by? ");
@@ -147,8 +158,24 @@ public class Dominic {
                     break;
                 case EVENTS:
                     try {
-                        String[] eventVals = Events.getValidEvent(input.substring(6).trim());
-                        List.append(new Events(eventVals[0], eventVals[1], eventVals[2]));
+                        String task = Events.getValidTask(input.substring(6).trim());
+                        String from = Events.getValidFrom(input.substring(6).trim());
+                        String to = Events.getValidTo(input.substring(6).trim());
+                        LocalDate dateFrom;
+                        LocalDate dateTo;
+                        if (Dominic.isLocalDate(from) && Dominic.isLocalDate(to)) {
+                            dateFrom = Dominic.toLocalDate(from);
+                            dateTo = Dominic.toLocalDate(to);
+                            List.append(new Events(task, dateFrom, dateTo));
+                        } else if (Dominic.isLocalDate(from)) {
+                            dateFrom = Dominic.toLocalDate(from);
+                            List.append(new Events(task, dateFrom, to));
+                        } else if (Dominic.isLocalDate(to)) {
+                            dateTo = Dominic.toLocalDate(to);
+                            List.append(new Events(task, from, dateTo));
+                        } else {
+                            List.append(new Events(task, from, to));
+                        }
                         Dominic.printRecentlyAdded();
                     } catch (InvalidKeywordException e) {
                         System.out.println("When is the event? " + e.getMessage());
@@ -165,6 +192,20 @@ public class Dominic {
         }
         List.writeToFile(DB);
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    public static boolean isLocalDate(String string) {
+        try {
+            Dominic.toLocalDate(string);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    public static LocalDate toLocalDate(String string) throws DateTimeParseException {
+        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(string, inputFormat);
     }
 
     private static void greet() {

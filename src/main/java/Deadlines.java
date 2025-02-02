@@ -1,15 +1,25 @@
 import exceptions.InvalidKeywordException;
 import exceptions.MissingArgumentException;
 
+import java.time.LocalDate;
+
 public class Deadlines extends Task {
-    private final String deadline;
+    private final String stringDeadline;
+    private final LocalDate dateDeadline;
 
     public Deadlines(String task, String deadline) {
         super(task);
-        this.deadline = deadline;
+        this.stringDeadline = deadline;
+        this.dateDeadline = null;
     }
 
-    public static String[] getValidDeadline(String input) throws MissingArgumentException, InvalidKeywordException {
+    public Deadlines(String task, LocalDate deadline) {
+        super(task);
+        this.stringDeadline = null;
+        this.dateDeadline = deadline;
+    }
+
+    private static void checkValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
         if (input.isEmpty()) {
             throw new MissingArgumentException("");
         }
@@ -17,21 +27,35 @@ public class Deadlines extends Task {
         if (input.substring(0, input.indexOf(" /by ")).trim().isEmpty() || input.indexOf(" /by ") == 0) {
             throw new MissingArgumentException("");
         }
+    }
 
-        String[] args = new String[2];
-        args[0] = input.substring(0, input.indexOf(" /by "));
-        args[1] = input.substring(input.indexOf(" /by ") + 5);
-        return args;
+    public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
+        Deadlines.checkValidTask(input);
+        return input.substring(0, input.indexOf(" /by "));
+    }
+
+    public static String getValidDeadline(String input) throws MissingArgumentException, InvalidKeywordException {
+        Deadlines.checkValidTask(input);
+        return input.substring(input.indexOf(" /by ") + 5);
     }
 
     @Override
     public String toFileString() {
-        return "[D]\n" + (super.isMarked() ? "[x]" : "[ ]") + "\n" + super.getTask() + " /by " + this.deadline + "\n";
+        String base = "[D]\n" + (super.isMarked() ? "[x]" : "[ ]") + "\n" + super.getTask() + " /by ";
+        if (this.dateDeadline != null) {
+            return base + Task.dateToFileString(this.dateDeadline) + "\n";
+        } else {
+            return base + this.stringDeadline + "\n";
+        }
     }
 
     @Override
     public String toString() {
-        return "[D] " + (super.isMarked() ? "[x] " : "[ ] ")
-            + super.getTask() + " (by: " + this.deadline + ")";
+        String base = "[D] " + (super.isMarked() ? "[x] " : "[ ] ") + super.getTask() + " (by: ";
+        if (this.dateDeadline != null) {
+            return base + Task.dateToString(this.dateDeadline) + ")";
+        } else {
+            return base + this.stringDeadline + ")";
+        }
     }
 }
