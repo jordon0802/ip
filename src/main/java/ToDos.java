@@ -5,7 +5,7 @@ public class ToDos extends Task {
         super(task);
     }
 
-    public static String getValidToDo(String input) throws MissingArgumentException {
+    public static String getValidTask(String input) throws MissingArgumentException {
         if (input.isEmpty()) {
             throw new MissingArgumentException("");
         }
