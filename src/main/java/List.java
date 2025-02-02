@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public final class List {
@@ -44,14 +45,35 @@ public final class List {
                 // Create task
                 Task t;
                 if (type.equals("[T]")) {
-                    String todoVal = ToDos.getValidToDo(task);
-                    t = new ToDos(todoVal);
+                    t = new ToDos(task);
                 } else if (type.equals("[D]")) {
-                    String[] deadlineVals = Deadlines.getValidDeadline(task);
-                    t = new Deadlines(deadlineVals[0], deadlineVals[1]);
+                    String deadline = Deadlines.getValidDeadline(task);
+                    task = Deadlines.getValidTask(task);
+                    LocalDate dateDeadline;
+                    if (Dominic.isLocalDate(deadline)) {
+                        dateDeadline = Dominic.toLocalDate(deadline);
+                        t = new Deadlines(task, dateDeadline);
+                    } else {
+                        t = new Deadlines(task, deadline);
+                    }
                 } else {
-                    String[] eventVals = Events.getValidEvent(task);
-                    t = new Events(eventVals[0], eventVals[1], eventVals[2]);
+                    String from = Events.getValidFrom(task);
+                    String to = Events.getValidTo(task);
+                    LocalDate dateFrom;
+                    LocalDate dateTo;
+                    if (Dominic.isLocalDate(from) && Dominic.isLocalDate(to)) {
+                        dateFrom = Dominic.toLocalDate(from);
+                        dateTo = Dominic.toLocalDate(to);
+                        t = new Events(task, dateFrom, dateTo);
+                    } else if (Dominic.isLocalDate(from)) {
+                        dateFrom = Dominic.toLocalDate(from);
+                        t = new Events(task, dateFrom, to);
+                    } else if (Dominic.isLocalDate(to)) {
+                        dateTo = Dominic.toLocalDate(to);
+                        t = new Events(task, from, dateTo);
+                    } else {
+                        t = new Events(task, from, to);
+                    }
                 }
 
                 // Mark if required

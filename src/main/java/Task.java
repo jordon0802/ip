@@ -1,5 +1,8 @@
 import exceptions.InvalidKeywordException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
     private final String task;
     private boolean isMarked;
@@ -13,6 +16,16 @@ public abstract class Task {
         if (!arg.contains(kw) || (arg.substring(arg.indexOf(kw) + kw.length()).trim().isEmpty())) {
             throw new InvalidKeywordException("(Use" + kw + "to specify.)");
         }
+    }
+
+    protected static String dateToFileString(LocalDate date) {
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return date.format(outputFormat);
+    }
+
+    protected static String dateToString(LocalDate date) {
+        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return date.format(outputFormat);
     }
 
     protected String getTask() {
