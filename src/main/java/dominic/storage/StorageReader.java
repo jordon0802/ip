@@ -1,6 +1,5 @@
 package dominic.storage;
 
-import dominic.commands.ListCommand;
 import dominic.exceptions.InvalidFileFormatException;
 import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
@@ -23,6 +22,17 @@ public final class StorageReader {
     private static final File DIR = new File("./data/");
     private static final File DB = new File("./data/dominic.txt");
 
+    private enum Type {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
+
+    private enum Mark {
+        MARKED,
+        UNMARKED
+    }
+
     private StorageReader() {
     }
 
@@ -35,19 +45,24 @@ public final class StorageReader {
                 String task = fr.readLine();
 
                 // Check valid format
-                if (!type.equals("[T]") && !type.equals("[D]") && !type.equals("[E]")) {
-                    throw new InvalidFileFormatException("Invalid file format.");
-                }
+                Type taskType = switch (type) {
+                    case "[T]" -> Type.TODO;
+                    case "[D]" -> Type.DEADLINE;
+                    case "[E]" -> Type.EVENT;
+                    default -> throw new InvalidFileFormatException("Invalid file format.");
+                };
 
-                if (!mark.equals("[x]") && !mark.equals("[ ]")) {
-                    throw new InvalidFileFormatException("Invalid file format.");
-                }
+                Mark markType = switch (mark) {
+                    case "[M]" -> Mark.MARKED;
+                    case "[U]" -> Mark.UNMARKED;
+                    default -> throw new InvalidFileFormatException("Invalid file format.");
+                };
 
                 // Create task
                 Task t;
-                if (type.equals("[T]")) {
+                if (taskType == Type.TODO) {
                     t = new Todo(task);
-                } else if (type.equals("[D]")) {
+                } else if (taskType == Type.DEADLINE) {
                     String deadline = Deadline.getValidDeadline(task);
                     task = Deadline.getValidTask(task);
                     LocalDate dateDeadline;
@@ -78,7 +93,7 @@ public final class StorageReader {
                 }
 
                 // Mark if required
-                if (mark.equals("[x]")) {
+                if (markType == Mark.MARKED) {
                     t.setMarked();
                 }
 
