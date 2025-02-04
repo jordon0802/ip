@@ -9,7 +9,7 @@ public class Todo extends Task {
 
     public static String getValidTask(String input) throws MissingArgumentException {
         if (input.isEmpty()) {
-            throw new MissingArgumentException("");
+            throw new MissingArgumentException("Missing argument");
         }
         return input;
     }
