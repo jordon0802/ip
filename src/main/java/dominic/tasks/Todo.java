@@ -1,7 +1,9 @@
-import exceptions.MissingArgumentException;
+package dominic.tasks;
 
-public class ToDos extends Task {
-    public ToDos(String task) {
+import dominic.exceptions.MissingArgumentException;
+
+public class Todo extends Task {
+    public Todo(String task) {
         super(task);
     }
 

@@ -1,4 +1,4 @@
-package exceptions;
+package dominic.exceptions;
 
 public class InvalidKeywordException extends Exception {
     public InvalidKeywordException(String message) {

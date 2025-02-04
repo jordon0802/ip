@@ -1,4 +1,4 @@
-package exceptions;
+package dominic.exceptions;
 
 public class InvalidFileFormatException extends Exception {
     public InvalidFileFormatException(String message) {

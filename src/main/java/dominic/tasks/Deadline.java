@@ -1,25 +1,28 @@
-import exceptions.InvalidKeywordException;
-import exceptions.MissingArgumentException;
+package dominic.tasks;
+
+import dominic.exceptions.InvalidKeywordException;
+import dominic.exceptions.MissingArgumentException;
+import dominic.utils.DateFormatter;
 
 import java.time.LocalDate;
 
-public class Deadlines extends Task {
-    private final String stringDeadline;
-    private final LocalDate dateDeadline;
-    private final boolean isDateDeadline;
+public class Deadline extends Task {
+    private final String STRING_DEADLINE;
+    private final LocalDate DATE_DEADLINE;
+    private final boolean IS_DATE_DEADLINE;
 
-    public Deadlines(String task, String deadline) {
+    public Deadline(String task, String deadline) {
         super(task);
-        this.stringDeadline = deadline;
-        this.dateDeadline = null;
-        this.isDateDeadline = false;
+        this.STRING_DEADLINE = deadline;
+        this.DATE_DEADLINE = null;
+        this.IS_DATE_DEADLINE = false;
     }
 
-    public Deadlines(String task, LocalDate deadline) {
+    public Deadline(String task, LocalDate deadline) {
         super(task);
-        this.stringDeadline = null;
-        this.dateDeadline = deadline;
-        this.isDateDeadline = true;
+        this.STRING_DEADLINE = null;
+        this.DATE_DEADLINE = deadline;
+        this.IS_DATE_DEADLINE = true;
     }
 
     private static void checkValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
@@ -33,40 +36,40 @@ public class Deadlines extends Task {
     }
 
     public LocalDate getDateDeadline() {
-        return this.dateDeadline;
+        return this.DATE_DEADLINE;
     }
 
     public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
-        Deadlines.checkValidTask(input);
+        Deadline.checkValidTask(input);
         return input.substring(0, input.indexOf(" /by "));
     }
 
     public static String getValidDeadline(String input) throws MissingArgumentException, InvalidKeywordException {
-        Deadlines.checkValidTask(input);
+        Deadline.checkValidTask(input);
         return input.substring(input.indexOf(" /by ") + 5);
     }
 
     public boolean isDateDeadline() {
-        return this.isDateDeadline;
+        return this.IS_DATE_DEADLINE;
     }
 
     @Override
     public String toFileString() {
         String base = "[D]\n" + (super.isMarked() ? "[x]" : "[ ]") + "\n" + super.getTask() + " /by ";
-        if (this.dateDeadline != null) {
-            return base + Task.dateToFileString(this.dateDeadline) + "\n";
+        if (this.DATE_DEADLINE != null) {
+            return base + DateFormatter.dateToFileString(this.DATE_DEADLINE) + "\n";
         } else {
-            return base + this.stringDeadline + "\n";
+            return base + this.STRING_DEADLINE + "\n";
         }
     }
 
     @Override
     public String toString() {
         String base = "[D] " + (super.isMarked() ? "[x] " : "[ ] ") + super.getTask() + " (by: ";
-        if (this.dateDeadline != null) {
-            return base + Task.dateToString(this.dateDeadline) + ")";
+        if (this.DATE_DEADLINE != null) {
+            return base + DateFormatter.dateToString(this.DATE_DEADLINE) + ")";
         } else {
-            return base + this.stringDeadline + ")";
+            return base + this.STRING_DEADLINE + ")";
         }
     }
 }

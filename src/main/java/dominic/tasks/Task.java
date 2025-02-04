@@ -1,14 +1,13 @@
-import exceptions.InvalidKeywordException;
+package dominic.tasks;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import dominic.exceptions.InvalidKeywordException;
 
 public abstract class Task {
-    private final String task;
+    private final String TASK;
     private boolean isMarked;
 
     protected Task(String task) {
-        this.task = task;
+        this.TASK = task;
         this.isMarked = false;
     }
 
@@ -18,18 +17,8 @@ public abstract class Task {
         }
     }
 
-    protected static String dateToFileString(LocalDate date) {
-        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return date.format(outputFormat);
-    }
-
-    protected static String dateToString(LocalDate date) {
-        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        return date.format(outputFormat);
-    }
-
     protected String getTask() {
-        return this.task;
+        return this.TASK;
     }
 
     protected boolean isMarked() {
@@ -48,6 +37,6 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return (this.isMarked ? "[x] " : "[ ] ") + this.task;
+        return (this.isMarked ? "[x] " : "[ ] ") + this.TASK;
     }
 }
