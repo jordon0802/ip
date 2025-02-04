@@ -2,6 +2,8 @@ package dominic.tasks;
 
 import dominic.exceptions.InvalidKeywordException;
 
+import java.util.regex.Pattern;
+
 public abstract class Task {
     private final String TASK;
     private boolean isMarked;
@@ -12,7 +14,8 @@ public abstract class Task {
     }
 
     public static void checkKeyword(String arg, String kw) throws InvalidKeywordException {
-        if (!arg.contains(kw) || (arg.substring(arg.indexOf(kw) + kw.length()).trim().isEmpty())) {
+        Pattern pattern = Pattern.compile(".*" + kw + ".*");
+        if (!pattern.matcher(arg).matches()) {
             throw new InvalidKeywordException("(Use" + kw + "to specify.)");
         }
     }
