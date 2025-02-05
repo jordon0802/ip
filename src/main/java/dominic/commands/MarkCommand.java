@@ -3,13 +3,28 @@ package dominic.commands;
 import dominic.utils.List;
 import dominic.tasks.Task;
 
+/**
+ * Represents the mark command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class MarkCommand extends Command {
+    /** Command keyword. */
     public static final String COMMAND = "mark";
 
+    /**
+     * Constructor from a string.
+     *
+     * @param arguments arguments to the command
+     */
     public MarkCommand(String arguments) {
         super(arguments);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         try {

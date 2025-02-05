@@ -9,7 +9,18 @@ import dominic.tasks.Task;
 
 import java.util.Scanner;
 
+/**
+ * Dominic, a personal assistant chatbot that helps to keep track of tasks.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class Dominic {
+    /**
+     * The entry point to the chatbot, Dominic.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         // Initialize Storage File
         boolean success = StorageReader.isInitialized();
@@ -67,16 +78,22 @@ public class Dominic {
         System.out.println(message);
     }
 
+    /**
+     * Prints a message on the last added task as well as the total tasks left in the list.
+     */
     public static void printRecentlyAdded() {
-        Task[] arr = List.toTaskArray();
-        int len = arr.length;
-        System.out.println("Noted, added new task:\n\t" + arr[len - 1].toString());
+        Task[] tasks = List.toTaskArray();
+        int len = tasks.length;
+        System.out.println("Noted, added new task:\n\t" + tasks[len - 1].toString());
         System.out.println("Now you have " + len + " task(s) pending.");
     }
 
+    /**
+     * Prints a message on the last removed task as well as the total tasks left in the list.
+     */
     public static void printRecentlyDeleted(Task task) {
-        Task[] arr = List.toTaskArray();
-        int len = arr.length;
+        Task[] tasks = List.toTaskArray();
+        int len = tasks.length;
         System.out.println("Got it, deleted task:\n\t" + task.toString());
         System.out.println("Now you have " + len + " task(s) pending.");
     }

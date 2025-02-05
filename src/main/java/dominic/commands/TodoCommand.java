@@ -5,13 +5,28 @@ import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Todo;
 import dominic.ui.Dominic;
 
+/**
+ * Represents the todo command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class TodoCommand extends Command{
+    /** Command keyword. */
     public static final String COMMAND = "todo";
 
+    /**
+     * Constructor from a string.
+     *
+     * @param arguments arguments to the command
+     */
     public TodoCommand(String arguments) {
         super(arguments);
     }
 
+    /**
+     * {@inheritDoc}
+      */
     @Override
     public void execute() {
         try {

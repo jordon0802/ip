@@ -13,16 +13,29 @@ import dominic.commands.UnmarkCommand;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A utility class that parses user input.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public final class Parser {
     private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<command>\\w+)(?<arguments>.*)");
 
     private Parser() {
     }
 
+    /**
+     * Returns true if, and only if, {@code input} is "bye".
+     *
+     * @param input string to be matched
+     * @return true if {@code input} is "bye", otherwise false
+     */
     public static boolean isByeInput(String input) {
         Matcher matcher = COMMAND_FORMAT.matcher(input.trim());
         if (!matcher.matches()) {
             System.out.println("Error: Invalid command.");
+            return false;
         }
         String command = matcher.group("command");
         String arguments = matcher.group("arguments").trim();
@@ -67,7 +80,7 @@ public final class Parser {
             }
             return false;
         } else {
-            ByeCommand byeCommand = new ByeCommand(arguments);
+            ByeCommand byeCommand = new ByeCommand();
             byeCommand.execute();
             return true;
         }

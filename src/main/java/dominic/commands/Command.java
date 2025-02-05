@@ -7,6 +7,9 @@ public abstract class Command {
         this.arguments = arguments;
     }
 
+    /**
+     * Executes the command.
+     */
     public abstract void execute();
 
     protected String getArguments() {

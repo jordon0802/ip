@@ -8,12 +8,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * A utility class that writes to the storage file.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public final class StorageWriter {
     private static final File DB = new File("./data/dominic.txt");
 
     private StorageWriter() {
     }
 
+    /**
+     * Overwrites storage file with updated list.
+     */
     public static void writeToFile() {
         // Delete File
         try {

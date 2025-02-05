@@ -8,13 +8,28 @@ import dominic.tasks.Task;
 
 import java.time.LocalDate;
 
+/**
+ * Represents the filter command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class FilterCommand extends Command {
+    /** Command keyword */
     public static final String COMMAND = "filter";
 
+    /**
+     * Constructor from a string.
+     *
+     * @param arguments arguments to the command
+     */
     public FilterCommand(String arguments) {
         super(arguments);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         if (DateFormatter.isLocalDate(super.getArguments())) {

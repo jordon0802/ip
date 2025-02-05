@@ -1,7 +1,7 @@
 package dominic.storage;
 
 import dominic.exceptions.InvalidFileFormatException;
-import dominic.exceptions.InvalidKeywordException;
+import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Deadline;
@@ -18,6 +18,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * A utility class that initialize and reads from the storage file.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public final class StorageReader {
     private static final File DIR = new File("./data/");
     private static final File DB = new File("./data/dominic.txt");
@@ -36,7 +42,10 @@ public final class StorageReader {
     private StorageReader() {
     }
 
-    public static void fileToList() {
+    /**
+     * Reads the storage file and populates the list with tasks.
+     */
+    private static void fileToList() {
         try (BufferedReader fr = new BufferedReader(new FileReader(StorageReader.DB))) {
             while (fr.ready()) {
                 // Read 3 lines at a time
@@ -102,12 +111,17 @@ public final class StorageReader {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found.");
-        } catch (IOException | MissingArgumentException | InvalidKeywordException
+        } catch (IOException | MissingArgumentException | MissingKeywordException
                  | InvalidKeywordOrderException | InvalidFileFormatException e) {
             System.out.println("Error: File corrupted/failed to close file." + e.getMessage());
         }
     }
 
+    /**
+     * Returns true if, and only if, storage directory exists or is created successfully.
+     *
+     * @return true if storage directory exists or is created successfully, otherwise false
+     */
     public static boolean isInitialized() {
         try {
             // Case 1: Valid File and Directory
