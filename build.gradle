@@ -32,10 +32,12 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "dominic"
     archiveClassifier = null
+    archiveVersion = "v1.0.0-alpha"
 }
 
 run{
+    enableAssertions = true
     standardInput = System.in
 }

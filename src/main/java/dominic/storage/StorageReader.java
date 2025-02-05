@@ -108,7 +108,7 @@ public final class StorageReader {
         }
     }
 
-    public static boolean init() {
+    public static boolean isInitialized() {
         try {
             // Case 1: Valid File and Directory
             if (StorageReader.DIR.isDirectory() && StorageReader.DB.isFile()) {

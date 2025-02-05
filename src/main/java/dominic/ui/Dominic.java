@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Dominic {
     public static void main(String[] args) {
         // Initialize Storage File
-        boolean success = StorageReader.init();
+        boolean success = StorageReader.isInitialized();
         if (!success) {
             return;
         }
@@ -31,7 +31,7 @@ public class Dominic {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
 
-        while (!Parser.parseInput(input)) {
+        while (!Parser.isByeInput(input)) {
             input = scanner.nextLine();
         }
 

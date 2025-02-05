@@ -19,20 +19,20 @@ public class FilterCommand extends Command {
     public void execute() {
         if (DateFormatter.isLocalDate(super.getArguments())) {
             LocalDate date = DateFormatter.toLocalDate(super.getArguments());
-            Task[] list = List.toTaskArray();
-            int length = list.length;
+            Task[] tasks = List.toTaskArray();
+            int length = tasks.length;
             int counter = 1;
             for (int i = 1; i <= length; i++) {
-                if (list[i - 1] instanceof Deadline d) {
-                    if (d.isDateDeadline() && (d.getDateDeadline().isEqual(date))) {
-                        System.out.println(counter + "." + d);
+                if (tasks[i - 1] instanceof Deadline deadline) {
+                    if (deadline.isDateDeadline() && (deadline.getDateDeadline().isEqual(date))) {
+                        System.out.println(counter + "." + deadline);
                         counter++;
                     }
-                } else if (list[i - 1] instanceof Event e) {
-                    if ((e.isDateFrom() && e.isDateTo())
-                            && (e.getDateFrom().isEqual(date) || e.getDateFrom().isBefore(date))
-                            && (e.getDateTo().isEqual(date) || e.getDateTo().isAfter(date))) {
-                        System.out.println(counter + "." + e);
+                } else if (tasks[i - 1] instanceof Event event) {
+                    if ((event.isDateFrom() && event.isDateTo())
+                            && (event.getDateFrom().isEqual(date) || event.getDateFrom().isBefore(date))
+                            && (event.getDateTo().isEqual(date) || event.getDateTo().isAfter(date))) {
+                        System.out.println(counter + "." + event);
                         counter++;
                     }
                 }

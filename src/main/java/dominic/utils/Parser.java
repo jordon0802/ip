@@ -19,7 +19,7 @@ public final class Parser {
     private Parser() {
     }
 
-    public static boolean parseInput(String input) {
+    public static boolean isByeInput(String input) {
         Matcher matcher = COMMAND_FORMAT.matcher(input.trim());
         if (!matcher.matches()) {
             System.out.println("Error: Invalid command.");
