@@ -13,14 +13,14 @@ public abstract class Task {
         this.isMarked = false;
     }
 
-    public static void checkKeyword(String arg, String kw) throws InvalidKeywordException {
+    protected static void checkKeyword(String arg, String kw) throws InvalidKeywordException {
         Pattern pattern = Pattern.compile(".*" + kw + ".*");
         if (!pattern.matcher(arg).matches()) {
             throw new InvalidKeywordException("(Use" + kw + "to specify.)");
         }
     }
 
-    protected String getTask() {
+    public String getTask() {
         return this.TASK;
     }
 

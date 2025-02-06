@@ -5,6 +5,7 @@ import dominic.commands.DeadlineCommand;
 import dominic.commands.DeleteCommand;
 import dominic.commands.EventCommand;
 import dominic.commands.FilterCommand;
+import dominic.commands.FindCommand;
 import dominic.commands.ListCommand;
 import dominic.commands.MarkCommand;
 import dominic.commands.TodoCommand;
@@ -61,6 +62,9 @@ public final class Parser {
                 EventCommand eventCommand = new EventCommand(arguments);
                 eventCommand.execute();
                 break;
+            case FindCommand.COMMAND:
+                FindCommand findCommand = new FindCommand(arguments);
+                findCommand.execute();
             // Invalid Command
             default:
                 System.out.println("Error: Invalid command.");
