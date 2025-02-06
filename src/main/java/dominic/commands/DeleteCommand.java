@@ -4,13 +4,28 @@ import dominic.utils.List;
 import dominic.tasks.Task;
 import dominic.ui.Dominic;
 
+/**
+ * Represents the delete command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class DeleteCommand extends Command {
+    /** Command keyword. */
     public static final String COMMAND = "delete";
 
+    /**
+     * Constructor from a string.
+     *
+     * @param arguments arguments to the command
+     */
     public DeleteCommand(String arguments) {
         super(arguments);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         try {

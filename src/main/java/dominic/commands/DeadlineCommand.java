@@ -1,21 +1,36 @@
 package dominic.commands;
 
+import dominic.exceptions.MissingKeywordException;
 import dominic.utils.DateFormatter;
 import dominic.utils.List;
-import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Deadline;
 import dominic.ui.Dominic;
 
 import java.time.LocalDate;
 
+/**
+ * Represents the bye command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class DeadlineCommand extends Command {
+    /** Command keyword. */
     public static final String COMMAND = "deadline";
 
+    /**
+     * Constructor from a string
+     *
+     * @param arguments arguments to the command
+     */
     public DeadlineCommand(String arguments) {
         super(arguments);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute() {
         try {
@@ -29,7 +44,7 @@ public class DeadlineCommand extends Command {
                 List.append(new Deadline(task, deadline));
             }
             Dominic.printRecentlyAdded();
-        } catch (InvalidKeywordException e) {
+        } catch (MissingKeywordException e) {
             System.out.println("When u need it done by? ");
         } catch (IndexOutOfBoundsException | MissingArgumentException e) {
             System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
