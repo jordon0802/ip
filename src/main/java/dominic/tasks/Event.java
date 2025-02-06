@@ -1,11 +1,11 @@
 package dominic.tasks;
 
+import java.time.LocalDate;
+
 import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.utils.DateFormatter;
-
-import java.time.LocalDate;
 
 /**
  * Represents an Event.
@@ -89,7 +89,7 @@ public class Event extends Task {
     private static void checkValidTask(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             MissingKeywordException {
         if (input.isEmpty()) {
-            throw new MissingArgumentException("");
+            throw new MissingArgumentException();
         }
         Task.checkKeyword(input, " /from ");
         Task.checkKeyword(input, " /to ");
@@ -97,7 +97,7 @@ public class Event extends Task {
             throw new InvalidKeywordOrderException("");
         }
         if (input.substring(0, input.indexOf(" /from ")).trim().isEmpty() || input.indexOf(" /from ") == 0) {
-            throw new MissingArgumentException("");
+            throw new MissingArgumentException();
         }
     }
 

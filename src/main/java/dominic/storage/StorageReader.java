@@ -1,5 +1,12 @@
 package dominic.storage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+
 import dominic.exceptions.InvalidFileFormatException;
 import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
@@ -10,13 +17,6 @@ import dominic.tasks.Task;
 import dominic.tasks.Todo;
 import dominic.utils.DateFormatter;
 import dominic.utils.List;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * A utility class that initialize and reads from the storage file.

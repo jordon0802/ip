@@ -1,7 +1,7 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.tasks.Task;
+import dominic.utils.List;
 
 /**
  * Represents the list command.

@@ -1,12 +1,12 @@
 package dominic.storage;
 
-import dominic.tasks.Task;
-import dominic.utils.List;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import dominic.tasks.Task;
+import dominic.utils.List;
 
 /**
  * A utility class that writes to the storage file.

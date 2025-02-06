@@ -1,8 +1,8 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.tasks.Task;
 import dominic.ui.Dominic;
+import dominic.utils.List;
 
 /**
  * Represents the delete command.

@@ -1,8 +1,8 @@
 package dominic.utils;
 
-import dominic.tasks.Task;
-
 import java.util.LinkedList;
+
+import dominic.tasks.Task;
 
 /**
  * A utility class that stores Task objects.

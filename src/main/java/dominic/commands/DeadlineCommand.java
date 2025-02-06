@@ -1,13 +1,13 @@
 package dominic.commands;
 
+import java.time.LocalDate;
+
 import dominic.exceptions.MissingKeywordException;
-import dominic.utils.DateFormatter;
-import dominic.utils.List;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Deadline;
 import dominic.ui.Dominic;
-
-import java.time.LocalDate;
+import dominic.utils.DateFormatter;
+import dominic.utils.List;
 
 /**
  * Represents the bye command.

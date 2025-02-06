@@ -1,9 +1,9 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Todo;
 import dominic.ui.Dominic;
+import dominic.utils.List;
 
 /**
  * Represents the todo command.

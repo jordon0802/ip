@@ -1,12 +1,12 @@
 package dominic.commands;
 
-import dominic.utils.DateFormatter;
-import dominic.utils.List;
+import java.time.LocalDate;
+
 import dominic.tasks.Deadline;
 import dominic.tasks.Event;
 import dominic.tasks.Task;
-
-import java.time.LocalDate;
+import dominic.utils.DateFormatter;
+import dominic.utils.List;
 
 /**
  * Represents the filter command.

@@ -1,10 +1,10 @@
 package dominic.tasks;
 
+import java.time.LocalDate;
+
 import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.utils.DateFormatter;
-
-import java.time.LocalDate;
 
 /**
  * Represents a Deadline.
@@ -49,11 +49,11 @@ public class Deadline extends Task {
      */
     private static void checkValidTask(String input) throws MissingArgumentException, MissingKeywordException {
         if (input.isEmpty()) {
-            throw new MissingArgumentException("");
+            throw new MissingArgumentException();
         }
         Task.checkKeyword(input, " /by ");
         if (input.substring(0, input.indexOf(" /by ")).trim().isEmpty() || input.indexOf(" /by ") == 0) {
-            throw new MissingArgumentException("");
+            throw new MissingArgumentException();
         }
     }
 

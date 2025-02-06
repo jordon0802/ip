@@ -1,5 +1,8 @@
 package dominic.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import dominic.commands.ByeCommand;
 import dominic.commands.DeadlineCommand;
 import dominic.commands.DeleteCommand;
@@ -9,9 +12,6 @@ import dominic.commands.ListCommand;
 import dominic.commands.MarkCommand;
 import dominic.commands.TodoCommand;
 import dominic.commands.UnmarkCommand;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A utility class that parses user input.
