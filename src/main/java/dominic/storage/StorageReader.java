@@ -53,8 +53,8 @@ public final class StorageReader {
                 };
 
                 Mark markType = switch (mark) {
-                    case "[M]" -> Mark.MARKED;
-                    case "[U]" -> Mark.UNMARKED;
+                    case "[x]" -> Mark.MARKED;
+                    case "[ ]" -> Mark.UNMARKED;
                     default -> throw new InvalidFileFormatException("Invalid file format.");
                 };
 
@@ -75,6 +75,7 @@ public final class StorageReader {
                 } else {
                     String from = Event.getValidFrom(task);
                     String to = Event.getValidTo(task);
+                    task = Event.getValidTask(task);
                     LocalDate dateFrom;
                     LocalDate dateTo;
                     if (DateFormatter.isLocalDate(from) && DateFormatter.isLocalDate(to)) {
@@ -104,7 +105,7 @@ public final class StorageReader {
             System.out.println("Error: File not found.");
         } catch (IOException | MissingArgumentException | InvalidKeywordException
                  | InvalidKeywordOrderException | InvalidFileFormatException e) {
-            System.out.println("Error: File corrupted/failed to close file." + e.getMessage());
+            System.out.println("Error: File corrupted/failed to close file. " + e.getMessage());
         }
     }
 

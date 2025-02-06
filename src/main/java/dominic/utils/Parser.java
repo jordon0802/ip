@@ -24,6 +24,7 @@ public final class Parser {
         Matcher matcher = COMMAND_FORMAT.matcher(input.trim());
         if (!matcher.matches()) {
             System.out.println("Error: Invalid command.");
+            return false;
         }
         String command = matcher.group("command");
         String arguments = matcher.group("arguments").trim();
@@ -65,6 +66,7 @@ public final class Parser {
             case FindCommand.COMMAND:
                 FindCommand findCommand = new FindCommand(arguments);
                 findCommand.execute();
+                break;
             // Invalid Command
             default:
                 System.out.println("Error: Invalid command.");
