@@ -1,8 +1,8 @@
 package dominic.utils;
 
-import dominic.tasks.Task;
-
 import java.util.LinkedList;
+
+import dominic.tasks.Task;
 
 public final class List {
     private static final LinkedList<Task> list = new LinkedList<>();

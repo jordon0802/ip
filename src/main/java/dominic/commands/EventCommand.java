@@ -1,15 +1,15 @@
 package dominic.commands;
 
-import dominic.utils.DateFormatter;
-import dominic.utils.List;
+import java.time.LocalDate;
+
 import dominic.exceptions.InvalidDateOrderException;
 import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Event;
 import dominic.ui.Dominic;
-
-import java.time.LocalDate;
+import dominic.utils.DateFormatter;
+import dominic.utils.List;
 
 public class EventCommand extends Command {
     public static final String COMMAND = "event";

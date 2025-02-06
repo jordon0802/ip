@@ -1,11 +1,11 @@
 package dominic.tasks;
 
+import java.time.LocalDate;
+
 import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.utils.DateFormatter;
-
-import java.time.LocalDate;
 
 public class Event extends Task {
     private final String STRING_FROM;
@@ -70,14 +70,6 @@ public class Event extends Task {
         }
     }
 
-    public LocalDate getDateFrom() {
-        return this.DATE_FROM;
-    }
-
-    public LocalDate getDateTo() {
-        return this.DATE_TO;
-    }
-
     public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             InvalidKeywordException {
         Event.checkValidTask(input);
@@ -94,6 +86,14 @@ public class Event extends Task {
             InvalidKeywordException {
         Event.checkValidTask(input);
         return input.substring(input.indexOf(" /to ") + 5);
+    }
+
+    public LocalDate getDateFrom() {
+        return this.DATE_FROM;
+    }
+
+    public LocalDate getDateTo() {
+        return this.DATE_TO;
     }
 
     public boolean isDateFrom() {

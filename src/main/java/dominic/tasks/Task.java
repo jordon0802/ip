@@ -1,8 +1,8 @@
 package dominic.tasks;
 
-import dominic.exceptions.InvalidKeywordException;
-
 import java.util.regex.Pattern;
+
+import dominic.exceptions.InvalidKeywordException;
 
 public abstract class Task {
     private final String TASK;

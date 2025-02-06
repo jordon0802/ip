@@ -1,13 +1,13 @@
 package dominic.ui;
 
+import java.util.Scanner;
+
 import dominic.commands.ListCommand;
 import dominic.storage.StorageReader;
 import dominic.storage.StorageWriter;
+import dominic.tasks.Task;
 import dominic.utils.List;
 import dominic.utils.Parser;
-import dominic.tasks.Task;
-
-import java.util.Scanner;
 
 public class Dominic {
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.tasks.Task;
 import dominic.ui.Dominic;
+import dominic.utils.List;
 
 public class DeleteCommand extends Command {
     public static final String COMMAND = "delete";

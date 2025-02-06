@@ -1,5 +1,12 @@
 package dominic.storage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
+
 import dominic.exceptions.InvalidFileFormatException;
 import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
@@ -11,27 +18,9 @@ import dominic.tasks.Todo;
 import dominic.utils.DateFormatter;
 import dominic.utils.List;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDate;
-
 public final class StorageReader {
     private static final File DIR = new File("./data/");
     private static final File DB = new File("./data/dominic.txt");
-
-    private enum Type {
-        TODO,
-        DEADLINE,
-        EVENT
-    }
-
-    private enum Mark {
-        MARKED,
-        UNMARKED
-    }
 
     private StorageReader() {
     }
@@ -145,5 +134,16 @@ public final class StorageReader {
             System.out.println("Error: IOException while creating dominic.txt file.");
             return false;
         }
+    }
+
+    private enum Type {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
+
+    private enum Mark {
+        MARKED,
+        UNMARKED
     }
 }

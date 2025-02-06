@@ -1,10 +1,10 @@
 package dominic.tasks;
 
+import java.time.LocalDate;
+
 import dominic.exceptions.InvalidKeywordException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.utils.DateFormatter;
-
-import java.time.LocalDate;
 
 public class Deadline extends Task {
     private final String STRING_DEADLINE;
@@ -35,10 +35,6 @@ public class Deadline extends Task {
         }
     }
 
-    public LocalDate getDateDeadline() {
-        return this.DATE_DEADLINE;
-    }
-
     public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordException {
         Deadline.checkValidTask(input);
         return input.substring(0, input.indexOf(" /by "));
@@ -47,6 +43,10 @@ public class Deadline extends Task {
     public static String getValidDeadline(String input) throws MissingArgumentException, InvalidKeywordException {
         Deadline.checkValidTask(input);
         return input.substring(input.indexOf(" /by ") + 5);
+    }
+
+    public LocalDate getDateDeadline() {
+        return this.DATE_DEADLINE;
     }
 
     public boolean isDateDeadline() {

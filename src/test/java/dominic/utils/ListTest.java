@@ -19,6 +19,8 @@ public class ListTest {
         tasks = List.toTaskArray();
         assertEquals(task0, tasks[0]);
         assertEquals(task1, tasks[1]);
+        List.remove(0);
+        List.remove(0);
     }
 
     @Test

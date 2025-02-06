@@ -1,11 +1,11 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.exceptions.MissingArgumentException;
 import dominic.tasks.Todo;
 import dominic.ui.Dominic;
+import dominic.utils.List;
 
-public class TodoCommand extends Command{
+public class TodoCommand extends Command {
     public static final String COMMAND = "todo";
 
     public TodoCommand(String arguments) {

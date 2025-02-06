@@ -1,7 +1,7 @@
 package dominic.commands;
 
-import dominic.utils.List;
 import dominic.tasks.Task;
+import dominic.utils.List;
 
 public class MarkCommand extends Command {
     public static final String COMMAND = "mark";
