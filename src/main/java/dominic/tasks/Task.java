@@ -43,7 +43,7 @@ public abstract class Task {
      *
      * @return the task description
      */
-    protected String getTask() {
+    public String getTask() {
         return this.TASK;
     }
 

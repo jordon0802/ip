@@ -82,6 +82,7 @@ public final class Parser {
             // Invalid Command
             default:
                 System.out.println("Error: Invalid command.");
+                break;
             }
             return false;
         } else {
