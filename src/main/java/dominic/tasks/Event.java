@@ -2,9 +2,9 @@ package dominic.tasks;
 
 import java.time.LocalDate;
 
-import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
+import dominic.exceptions.MissingKeywordException;
 import dominic.utils.DateFormatter;
 
 /**
@@ -14,10 +14,10 @@ import dominic.utils.DateFormatter;
  * @version v1.0.0-alpha
  */
 public class Event extends Task {
-    private final String STRING_FROM;
-    private final LocalDate DATE_FROM;
-    private final String STRING_TO;
-    private final LocalDate DATE_TO;
+    private final String stringFrom;
+    private final LocalDate dateFrom;
+    private final String stringTo;
+    private final LocalDate dateTo;
 
     /**
      * Constructs an Event when from and to is a String.
@@ -28,10 +28,10 @@ public class Event extends Task {
      */
     public Event(String task, String from, String to) {
         super(task);
-        this.STRING_FROM = from;
-        this.DATE_FROM = null;
-        this.STRING_TO = to;
-        this.DATE_TO = null;
+        this.stringFrom = from;
+        this.dateFrom = null;
+        this.stringTo = to;
+        this.dateTo = null;
     }
 
     /**
@@ -43,10 +43,10 @@ public class Event extends Task {
      */
     public Event(String task, LocalDate from, String to) {
         super(task);
-        this.STRING_FROM = null;
-        this.DATE_FROM = from;
-        this.STRING_TO = to;
-        this.DATE_TO = null;
+        this.stringFrom = null;
+        this.dateFrom = from;
+        this.stringTo = to;
+        this.dateTo = null;
     }
 
     /**
@@ -58,10 +58,10 @@ public class Event extends Task {
      */
     public Event(String task, String from, LocalDate to) {
         super(task);
-        this.STRING_FROM = from;
-        this.DATE_FROM = null;
-        this.STRING_TO = null;
-        this.DATE_TO = to;
+        this.stringFrom = from;
+        this.dateFrom = null;
+        this.stringTo = null;
+        this.dateTo = to;
     }
 
     /**
@@ -73,10 +73,10 @@ public class Event extends Task {
      */
     public Event(String task, LocalDate from, LocalDate to) {
         super(task);
-        this.STRING_FROM = null;
-        this.DATE_FROM = from;
-        this.STRING_TO = null;
-        this.DATE_TO = to;
+        this.stringFrom = null;
+        this.dateFrom = from;
+        this.stringTo = null;
+        this.dateTo = to;
     }
 
     /**
@@ -89,7 +89,7 @@ public class Event extends Task {
     private static void checkValidTask(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             MissingKeywordException {
         if (input.isEmpty()) {
-            throw new MissingArgumentException();
+            throw new MissingArgumentException("");
         }
         Task.checkKeyword(input, " /from ");
         Task.checkKeyword(input, " /to ");
@@ -97,7 +97,7 @@ public class Event extends Task {
             throw new InvalidKeywordOrderException("");
         }
         if (input.substring(0, input.indexOf(" /from ")).trim().isEmpty() || input.indexOf(" /from ") == 0) {
-            throw new MissingArgumentException();
+            throw new MissingArgumentException("");
         }
     }
 
@@ -107,7 +107,7 @@ public class Event extends Task {
      * @return a LocalDate that represents when the event is from
      */
     public LocalDate getDateFrom() {
-        return this.DATE_FROM;
+        return this.dateFrom;
     }
 
     /**
@@ -116,7 +116,7 @@ public class Event extends Task {
      * @return a LocalDate that represents when the event is to
      */
     public LocalDate getDateTo() {
-        return this.DATE_TO;
+        return this.dateTo;
     }
 
     /**
@@ -162,21 +162,21 @@ public class Event extends Task {
     }
 
     /**
-     * Returns true if, and only if, DATE_FROM is not null.
+     * Returns true if, and only if, dateFrom is not null.
      *
-     * @return true if DATE_FROM is not null, otherwise false
+     * @return true if dateFrom is not null, otherwise false
      */
     public boolean isDateFrom() {
-        return !(this.DATE_FROM == null);
+        return !(this.dateFrom == null);
     }
 
     /**
-     * Returns true if, and only if, DATE_TO is not null.
+     * Returns true if, and only if, dateTo is not null.
      *
-     * @return true if DATE_TO is not null, otherwise false
+     * @return true if dateTo is not null, otherwise false
      */
     public boolean isDateTo() {
-        return !(this.DATE_TO == null);
+        return !(this.dateTo == null);
     }
 
     /**
@@ -185,15 +185,15 @@ public class Event extends Task {
     @Override
     public String toFileString() {
         String base = "[E]\n" + (super.isMarked() ? "[x]" : "[ ]") + "\n" + super.getTask() + " /from ";
-        if (DATE_FROM != null) {
-            base += DateFormatter.dateToFileString(DATE_FROM);
+        if (dateFrom != null) {
+            base += DateFormatter.dateToFileString(dateFrom);
         } else {
-            base += this.STRING_FROM;
+            base += this.stringFrom;
         }
-        if (DATE_TO != null) {
-            return base + " /to " + DateFormatter.dateToFileString(DATE_TO) + "\n";
+        if (dateTo != null) {
+            return base + " /to " + DateFormatter.dateToFileString(dateTo) + "\n";
         } else {
-            return base + " /to " + this.STRING_TO + "\n";
+            return base + " /to " + this.stringTo + "\n";
         }
     }
 
@@ -203,15 +203,15 @@ public class Event extends Task {
     @Override
     public String toString() {
         String base = "[E] " + (super.isMarked() ? "[x] " : "[ ] ") + super.getTask() + " (from: ";
-        if (DATE_FROM != null) {
-            base += DateFormatter.dateToString(DATE_FROM);
+        if (dateFrom != null) {
+            base += DateFormatter.dateToString(dateFrom);
         } else {
-            base += this.STRING_FROM;
+            base += this.stringFrom;
         }
-        if (DATE_TO != null) {
-            return base + " to: " + DateFormatter.dateToString(DATE_TO) + ")";
+        if (dateTo != null) {
+            return base + " to: " + DateFormatter.dateToString(dateTo) + ")";
         } else {
-            return base + " to: " + this.STRING_TO + ")";
+            return base + " to: " + this.stringTo + ")";
         }
     }
 }

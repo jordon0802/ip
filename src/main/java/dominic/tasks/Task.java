@@ -1,8 +1,8 @@
 package dominic.tasks;
 
-import dominic.exceptions.MissingKeywordException;
-
 import java.util.regex.Pattern;
+
+import dominic.exceptions.MissingKeywordException;
 
 /**
  * Abstract representation of a basic task.
@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  * @version v1.0.0-alpha
  */
 public abstract class Task {
-    private final String TASK;
+    private final String task;
     private boolean isMarked;
 
     /**
@@ -20,7 +20,7 @@ public abstract class Task {
      * @param task description of the task
      */
     protected Task(String task) {
-        this.TASK = task;
+        this.task = task;
         this.isMarked = false;
     }
 
@@ -44,7 +44,7 @@ public abstract class Task {
      * @return the task description
      */
     public String getTask() {
-        return this.TASK;
+        return this.task;
     }
 
     /**
@@ -84,6 +84,6 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        return (this.isMarked ? "[x] " : "[ ] ") + this.TASK;
+        return (this.isMarked ? "[x] " : "[ ] ") + this.task;
     }
 }

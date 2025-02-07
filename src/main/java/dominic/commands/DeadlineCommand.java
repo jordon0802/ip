@@ -2,8 +2,8 @@ package dominic.commands;
 
 import java.time.LocalDate;
 
-import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.MissingArgumentException;
+import dominic.exceptions.MissingKeywordException;
 import dominic.tasks.Deadline;
 import dominic.ui.Dominic;
 import dominic.utils.DateFormatter;
@@ -16,7 +16,9 @@ import dominic.utils.List;
  * @version v1.0.0-alpha
  */
 public class DeadlineCommand extends Command {
-    /** Command keyword. */
+    /**
+     * Command keyword.
+     */
     public static final String COMMAND = "deadline";
 
     /**
