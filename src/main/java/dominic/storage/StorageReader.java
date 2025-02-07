@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import dominic.exceptions.InvalidFileFormatException;
-import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
+import dominic.exceptions.MissingKeywordException;
 import dominic.tasks.Deadline;
 import dominic.tasks.Event;
 import dominic.tasks.Task;
@@ -27,17 +27,6 @@ import dominic.utils.List;
 public final class StorageReader {
     private static final File DIR = new File("./data/");
     private static final File DB = new File("./data/dominic.txt");
-
-    private enum Type {
-        TODO,
-        DEADLINE,
-        EVENT
-    }
-
-    private enum Mark {
-        MARKED,
-        UNMARKED
-    }
 
     private StorageReader() {
     }
@@ -160,5 +149,16 @@ public final class StorageReader {
             System.out.println("Error: IOException while creating dominic.txt file.");
             return false;
         }
+    }
+
+    private enum Type {
+        TODO,
+        DEADLINE,
+        EVENT
+    }
+
+    private enum Mark {
+        MARKED,
+        UNMARKED
     }
 }

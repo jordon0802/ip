@@ -6,7 +6,7 @@ package dominic.exceptions;
  * @author Jordon Chang
  * @version v1.0.0-alpha
  */
-public class MissingArgumentException extends Exception{
+public class MissingArgumentException extends Exception {
     /**
      * Constructor from a string.
      *

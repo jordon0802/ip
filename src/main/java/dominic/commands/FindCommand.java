@@ -6,6 +6,12 @@ import java.util.regex.Pattern;
 import dominic.tasks.Task;
 import dominic.utils.List;
 
+/**
+ * Represents the find command.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class FindCommand extends Command {
     /** Command keyword. */
     public static final String COMMAND = "find";

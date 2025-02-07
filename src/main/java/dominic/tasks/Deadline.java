@@ -2,8 +2,8 @@ package dominic.tasks;
 
 import java.time.LocalDate;
 
-import dominic.exceptions.MissingKeywordException;
 import dominic.exceptions.MissingArgumentException;
+import dominic.exceptions.MissingKeywordException;
 import dominic.utils.DateFormatter;
 
 /**
@@ -13,8 +13,8 @@ import dominic.utils.DateFormatter;
  * @version v1.0.0-alpha
  */
 public class Deadline extends Task {
-    private final String STRING_DEADLINE;
-    private final LocalDate DATE_DEADLINE;
+    private final String stringDeadline;
+    private final LocalDate dateDeadline;
 
     /**
      * Constructs a Deadline when deadline is a String
@@ -24,8 +24,8 @@ public class Deadline extends Task {
      */
     public Deadline(String task, String deadline) {
         super(task);
-        this.STRING_DEADLINE = deadline;
-        this.DATE_DEADLINE = null;
+        this.stringDeadline = deadline;
+        this.dateDeadline = null;
     }
 
     /**
@@ -36,8 +36,8 @@ public class Deadline extends Task {
      */
     public Deadline(String task, LocalDate deadline) {
         super(task);
-        this.STRING_DEADLINE = null;
-        this.DATE_DEADLINE = deadline;
+        this.stringDeadline = null;
+        this.dateDeadline = deadline;
     }
 
     /**
@@ -49,11 +49,11 @@ public class Deadline extends Task {
      */
     private static void checkValidTask(String input) throws MissingArgumentException, MissingKeywordException {
         if (input.isEmpty()) {
-            throw new MissingArgumentException();
+            throw new MissingArgumentException("");
         }
         Task.checkKeyword(input, " /by ");
         if (input.substring(0, input.indexOf(" /by ")).trim().isEmpty() || input.indexOf(" /by ") == 0) {
-            throw new MissingArgumentException();
+            throw new MissingArgumentException("");
         }
     }
 
@@ -63,7 +63,7 @@ public class Deadline extends Task {
      * @return a LocalDate that represents the deadline
      */
     public LocalDate getDateDeadline() {
-        return this.DATE_DEADLINE;
+        return this.dateDeadline;
     }
 
     /**
@@ -93,12 +93,12 @@ public class Deadline extends Task {
     }
 
     /**
-     * Returns true if, and only if, DATE_DEADLINE is not null.
+     * Returns true if, and only if, dateDeadline is not null.
      *
-     * @return true if DATE_DEADLINE is not null, otherwise false
+     * @return true if dateDeadline is not null, otherwise false
      */
     public boolean isDateDeadline() {
-        return !(this.DATE_DEADLINE == null);
+        return !(this.dateDeadline == null);
     }
 
     /**
@@ -107,10 +107,10 @@ public class Deadline extends Task {
     @Override
     public String toFileString() {
         String base = "[D]\n" + (super.isMarked() ? "[x]" : "[ ]") + "\n" + super.getTask() + " /by ";
-        if (this.DATE_DEADLINE != null) {
-            return base + DateFormatter.dateToFileString(this.DATE_DEADLINE) + "\n";
+        if (this.dateDeadline != null) {
+            return base + DateFormatter.dateToFileString(this.dateDeadline) + "\n";
         } else {
-            return base + this.STRING_DEADLINE + "\n";
+            return base + this.stringDeadline + "\n";
         }
     }
 
@@ -120,10 +120,10 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         String base = "[D] " + (super.isMarked() ? "[x] " : "[ ] ") + super.getTask() + " (by: ";
-        if (this.DATE_DEADLINE != null) {
-            return base + DateFormatter.dateToString(this.DATE_DEADLINE) + ")";
+        if (this.dateDeadline != null) {
+            return base + DateFormatter.dateToString(this.dateDeadline) + ")";
         } else {
-            return base + this.STRING_DEADLINE + ")";
+            return base + this.stringDeadline + ")";
         }
     }
 }

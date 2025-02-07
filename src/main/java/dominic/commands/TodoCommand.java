@@ -11,7 +11,7 @@ import dominic.utils.List;
  * @author Jordon Chang
  * @version v1.0.0-alpha
  */
-public class TodoCommand extends Command{
+public class TodoCommand extends Command {
     /** Command keyword. */
     public static final String COMMAND = "todo";
 
