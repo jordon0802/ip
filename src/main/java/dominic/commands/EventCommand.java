@@ -34,7 +34,7 @@ public class EventCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         try {
             String task = Event.getValidTask(super.getArguments());
             String from = Event.getValidFrom(super.getArguments());
@@ -57,15 +57,15 @@ public class EventCommand extends Command {
             } else {
                 List.append(new Event(task, from, to));
             }
-            Dominic.printRecentlyAdded();
+            return Dominic.printRecentlyAdded();
         } catch (MissingKeywordException e) {
-            System.out.println("When is the event? ");
+            return "When is the event? ";
         } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-            System.out.println("Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)");
+            return "Eh? What event do you have? (Usage: event <text> /from <from> /to <to>)";
         } catch (InvalidKeywordOrderException e) {
-            System.out.println("Invalid keyword order! (Usage: event <text> /from <from> /to <to>)");
+            return "Invalid keyword order! (Usage: event <text> /from <from> /to <to>)";
         } catch (InvalidDateOrderException e) {
-            System.out.println("Eh? How can end date be earlier than start date!");
+            return "Eh? How can end date be earlier than start date!";
         }
     }
 }

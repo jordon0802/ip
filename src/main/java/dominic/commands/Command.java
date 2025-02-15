@@ -16,7 +16,7 @@ public abstract class Command {
     /**
      * Executes the command.
      */
-    public abstract void execute();
+    public abstract String execute();
 
     protected String getArguments() {
         return this.arguments;
