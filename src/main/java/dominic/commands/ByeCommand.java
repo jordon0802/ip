@@ -21,7 +21,7 @@ public class ByeCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String execute() {
+        return "Bye. Hope to see you again soon!";
     }
 }

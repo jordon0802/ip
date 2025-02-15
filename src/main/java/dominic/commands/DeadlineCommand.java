@@ -34,7 +34,7 @@ public class DeadlineCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         try {
             String task = Deadline.getValidTask(super.getArguments());
             String deadline = Deadline.getValidDeadline(super.getArguments());
@@ -45,11 +45,11 @@ public class DeadlineCommand extends Command {
             } else {
                 List.append(new Deadline(task, deadline));
             }
-            Dominic.printRecentlyAdded();
+            return Dominic.printRecentlyAdded();
         } catch (MissingKeywordException e) {
-            System.out.println("When u need it done by? ");
+            return "When u need it done by? ";
         } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-            System.out.println("What deadline do you have? (Usage: deadline <text> /by <deadline>)");
+            return "What deadline do you have? (Usage: deadline <text> /by <deadline>)";
         }
     }
 }

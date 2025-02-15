@@ -31,29 +31,37 @@ public class FilterCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         if (DateFormatter.isLocalDate(super.getArguments())) {
             LocalDate date = DateFormatter.toLocalDate(super.getArguments());
             Task[] tasks = List.toTaskArray();
             int length = tasks.length;
             int counter = 1;
+            StringBuilder message = new StringBuilder();
             for (int i = 1; i <= length; i++) {
                 if (tasks[i - 1] instanceof Deadline deadline) {
                     if (deadline.isDateDeadline() && (deadline.getDateDeadline().isEqual(date))) {
-                        System.out.println(counter + "." + deadline);
+                        message.append(counter)
+                                .append(".")
+                                .append(deadline)
+                                .append("\n");
                         counter++;
                     }
                 } else if (tasks[i - 1] instanceof Event event) {
                     if ((event.isDateFrom() && event.isDateTo())
                             && (event.getDateFrom().isEqual(date) || event.getDateFrom().isBefore(date))
                             && (event.getDateTo().isEqual(date) || event.getDateTo().isAfter(date))) {
-                        System.out.println(counter + "." + event);
+                        message.append(counter)
+                                .append(".")
+                                .append(event)
+                                .append("\n");
                         counter++;
                     }
                 }
             }
+            return message.toString();
         } else {
-            System.out.println("Error: Invalid date format.");
+            return "Error: Invalid date format.";
         }
     }
 }

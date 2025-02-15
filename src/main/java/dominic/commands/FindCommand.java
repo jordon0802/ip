@@ -29,21 +29,25 @@ public class FindCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         if (super.getArguments().isEmpty()) {
-            System.out.println("No task matched!");
-            return;
+            return "No task matched!";
         }
 
         Pattern stringPattern = Pattern.compile(".*" + super.getArguments() + ".*");
         Task[] tasks = List.toTaskArray();
         int index = 1;
+        StringBuilder message = new StringBuilder();
         for (Task task : tasks) {
             Matcher matcher = stringPattern.matcher(task.getTask().trim());
             if (matcher.matches()) {
-                System.out.println(index + "." + task);
+                message.append(index)
+                        .append(".")
+                        .append(task)
+                        .append("\n");
                 index++;
             }
         }
+        return message.toString();
     }
 }

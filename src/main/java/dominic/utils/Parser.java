@@ -27,68 +27,63 @@ public final class Parser {
     }
 
     /**
-     * Returns true if, and only if, {@code input} is "bye".
+     * Runs command given.
      *
      * @param input string to be matched
-     * @return true if {@code input} is "bye", otherwise false
+     * @return output of the command
      */
-    public static boolean isByeInput(String input) {
+    public static String run(String input) {
         Matcher matcher = COMMAND_FORMAT.matcher(input.trim());
         if (!matcher.matches()) {
-            System.out.println("Error: Invalid command.");
-            return false;
+            return "Error: Invalid command.";
         }
         String command = matcher.group("command");
         String arguments = matcher.group("arguments").trim();
 
         if (!command.equalsIgnoreCase(ByeCommand.COMMAND)) {
-            switch (command) {
-            case ListCommand.COMMAND:
-                ListCommand listCommand = new ListCommand(arguments);
-                listCommand.execute();
-                break;
-            case FilterCommand.COMMAND:
-                FilterCommand filterCommand = new FilterCommand(arguments);
-                filterCommand.execute();
-                break;
-            case DeleteCommand.COMMAND:
-                DeleteCommand deleteCommand = new DeleteCommand(arguments);
-                deleteCommand.execute();
-                break;
-            case MarkCommand.COMMAND:
-                MarkCommand markCommand = new MarkCommand(arguments);
-                markCommand.execute();
-                break;
-            case UnmarkCommand.COMMAND:
-                UnmarkCommand unmarkCommand = new UnmarkCommand(arguments);
-                unmarkCommand.execute();
-                break;
-            case TodoCommand.COMMAND:
-                TodoCommand todoCommand = new TodoCommand(arguments);
-                todoCommand.execute();
-                break;
-            case DeadlineCommand.COMMAND:
-                DeadlineCommand deadlineCommand = new DeadlineCommand(arguments);
-                deadlineCommand.execute();
-                break;
-            case EventCommand.COMMAND:
-                EventCommand eventCommand = new EventCommand(arguments);
-                eventCommand.execute();
-                break;
-            case FindCommand.COMMAND:
-                FindCommand findCommand = new FindCommand(arguments);
-                findCommand.execute();
-                break;
-            // Invalid Command
-            default:
-                System.out.println("Error: Invalid command.");
-                break;
-            }
-            return false;
+            return switch (command) {
+                case ListCommand.COMMAND -> {
+                    ListCommand listCommand = new ListCommand(arguments);
+                    yield listCommand.execute();
+                }
+                case FilterCommand.COMMAND -> {
+                    FilterCommand filterCommand = new FilterCommand(arguments);
+                    yield filterCommand.execute();
+                }
+                case DeleteCommand.COMMAND -> {
+                    DeleteCommand deleteCommand = new DeleteCommand(arguments);
+                    yield deleteCommand.execute();
+                }
+                case MarkCommand.COMMAND -> {
+                    MarkCommand markCommand = new MarkCommand(arguments);
+                    yield markCommand.execute();
+                }
+                case UnmarkCommand.COMMAND -> {
+                    UnmarkCommand unmarkCommand = new UnmarkCommand(arguments);
+                    yield unmarkCommand.execute();
+                }
+                case TodoCommand.COMMAND -> {
+                    TodoCommand todoCommand = new TodoCommand(arguments);
+                    yield todoCommand.execute();
+                }
+                case DeadlineCommand.COMMAND -> {
+                    DeadlineCommand deadlineCommand = new DeadlineCommand(arguments);
+                    yield deadlineCommand.execute();
+                }
+                case EventCommand.COMMAND -> {
+                    EventCommand eventCommand = new EventCommand(arguments);
+                    yield eventCommand.execute();
+                }
+                case FindCommand.COMMAND -> {
+                    FindCommand findCommand = new FindCommand(arguments);
+                    yield findCommand.execute();
+                }
+                // Invalid Command
+                default -> "Error: Invalid command.";
+            };
         } else {
             ByeCommand byeCommand = new ByeCommand();
-            byeCommand.execute();
-            return true;
+            return byeCommand.execute();
         }
     }
 }

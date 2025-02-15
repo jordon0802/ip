@@ -1,13 +1,10 @@
 package dominic.ui;
 
-import java.util.Scanner;
-
 import dominic.commands.ListCommand;
 import dominic.storage.StorageReader;
 import dominic.storage.StorageWriter;
 import dominic.tasks.Task;
 import dominic.utils.List;
-import dominic.utils.Parser;
 
 /**
  * Dominic, a personal assistant chatbot that helps to keep track of tasks.
@@ -22,37 +19,13 @@ public class Dominic {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Initialize Storage File
-        boolean success = StorageReader.isInitialized();
-        if (!success) {
-            return;
-        }
-
-        // Greet message
-        Dominic.greet();
-
-        // List current tasks, if any
-        if (!List.isEmpty()) {
-            ListCommand listCommand = new ListCommand("");
-            System.out.println("Here are your current tasks sir:");
-            listCommand.execute();
-        }
-
-        // Initialize Scanner to receive dominic.commands
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-
-        while (!Parser.isByeInput(input)) {
-            input = scanner.nextLine();
-        }
-
         // Update Storage File before quitting
         StorageWriter.writeToFile();
     }
 
-    private static void greet() {
-        String message = "Sup! I'm\n"
-                + " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
+    private static String greet() {
+        return "Sup! I'm Dominic!\n"
+                /*+ " .----------------.  .----------------.  .----------------.  .----------------.  .-----------"
                 + "------. .----------------.  .----------------.\n"
                 + "| .--------------. || .--------------. || .--------------. || .--------------. || .----------"
                 + "----. || .--------------. || .--------------. |\n"
@@ -73,28 +46,51 @@ public class Dominic {
                 + "| '--------------' || '--------------' || '--------------' || '--------------' || '----------"
                 + "----' || '--------------' || '--------------' |\n"
                 + " '----------------'  '----------------'  '----------------'  '----------------'  '------------"
-                + "----'  '----------------'  '----------------'\n"
-                + "What can I do for you?";
-        System.out.println(message);
+                + "----'  '----------------'  '----------------'\n"*/
+                + "What can I do for you?\n";
+    }
+
+    public static String initialize() {
+        // Initialize Storage File
+        boolean success = StorageReader.isInitialized();
+        if (!success) {
+            return "Failed to initialize storage";
+        }
+
+        StringBuilder message = new StringBuilder();
+        // Greet message
+        message.append(Dominic.greet());
+
+        // List current tasks, if any
+        if (!List.isEmpty()) {
+            ListCommand listCommand = new ListCommand("");
+            message.append("Here are your current tasks sir:\n");
+            message.append(listCommand.execute());
+        }
+        return message.toString();
     }
 
     /**
      * Prints a message on the last added task as well as the total tasks left in the list.
      */
-    public static void printRecentlyAdded() {
+    public static String printRecentlyAdded() {
         Task[] tasks = List.toTaskArray();
         int len = tasks.length;
-        System.out.println("Noted, added new task:\n\t" + tasks[len - 1].toString());
-        System.out.println("Now you have " + len + " task(s) pending.");
+        return "Noted, added new task:\n\t" +
+                tasks[len - 1] + "\n" +
+                "Now you have " + len + " task(s) pending.";
     }
 
     /**
      * Prints a message on the last removed task as well as the total tasks left in the list.
      */
-    public static void printRecentlyDeleted(Task task) {
+    public static String printRecentlyDeleted(Task task) {
         Task[] tasks = List.toTaskArray();
         int len = tasks.length;
-        System.out.println("Got it, deleted task:\n\t" + task.toString());
-        System.out.println("Now you have " + len + " task(s) pending.");
+        return "Got it, deleted task:\n\t" +
+                task.toString() + "\n" +
+                "Now you have " + len + " task(s) pending.";
     }
+
+
 }

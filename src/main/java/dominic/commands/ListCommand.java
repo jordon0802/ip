@@ -26,11 +26,16 @@ public class ListCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         Task[] tasks = List.toTaskArray();
         int len = tasks.length;
+        StringBuilder message = new StringBuilder();
         for (int i = 1; i <= len; i++) {
-            System.out.println(i + "." + tasks[i - 1]);
+            message.append(i)
+                    .append(".")
+                    .append(tasks[i - 1])
+                    .append("\n");
         }
+        return message.toString();
     }
 }

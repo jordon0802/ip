@@ -28,13 +28,13 @@ public class TodoCommand extends Command {
      * {@inheritDoc}
       */
     @Override
-    public void execute() {
+    public String execute() {
         try {
             String todoVal = Todo.getValidTask(super.getArguments());
             List.append(new Todo(todoVal));
-            Dominic.printRecentlyAdded();
+            return Dominic.printRecentlyAdded();
         } catch (IndexOutOfBoundsException | MissingArgumentException e) {
-            System.out.println("Eh? What do you need to do?");
+            return "Eh? What do you need to do?";
         }
     }
 }

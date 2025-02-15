@@ -26,16 +26,16 @@ public class MarkCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         try {
             int idx = Integer.parseInt(super.getArguments());
             Task[] tasks = List.toTaskArray();
             tasks[idx - 1].setMarked();
-            System.out.println("Ok, bet, marked it:\n" + tasks[idx - 1]);
+            return "Ok, bet, marked it:\n" + tasks[idx - 1];
         } catch (NumberFormatException e) {
-            System.out.println("Error: Invalid arguments.");
+            return "Error: Invalid arguments.";
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: Invalid number.");
+            return "Error: Invalid number.";
         }
     }
 }

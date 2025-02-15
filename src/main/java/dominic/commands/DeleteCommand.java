@@ -27,15 +27,15 @@ public class DeleteCommand extends Command {
      * {@inheritDoc}
      */
     @Override
-    public void execute() {
+    public String execute() {
         try {
             int x = Integer.parseInt(super.getArguments());
             Task task = List.remove(x - 1);
-            Dominic.printRecentlyDeleted(task);
+            return Dominic.printRecentlyDeleted(task);
         } catch (NumberFormatException e) {
-            System.out.println("Error: Invalid arguments.");
+            return "Error: Invalid arguments.";
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Error: Invalid number.");
+            return "Error: Invalid number.";
         }
     }
 }
