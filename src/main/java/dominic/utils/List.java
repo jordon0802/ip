@@ -43,7 +43,10 @@ public final class List {
      * @param index the index of the task to be removed
      * @return the task that was removed from the list
      */
-    public static Task remove(int index) {
+    public static Task remove(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= List.list.size()) {
+            throw new IndexOutOfBoundsException();
+        }
         List.size--;
         return List.list.remove(index);
     }

@@ -1,10 +1,12 @@
 package dominic.utils;
 
-import dominic.tasks.Task;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
+
+import dominic.tasks.Task;
 
 public class ListTest {
     @Test
@@ -19,24 +21,36 @@ public class ListTest {
         tasks = List.toTaskArray();
         assertEquals(task0, tasks[0]);
         assertEquals(task1, tasks[1]);
-        List.remove(0);
-        List.remove(0);
+        try {
+            List.remove(0);
+            List.remove(0);
+        } catch (IndexOutOfBoundsException e) {
+            fail();
+        }
     }
 
     @Test
     public void testRemove() {
         Task task = new TaskStub("task");
         List.append(task);
-        Task removedTask = List.remove(0);
-        assertEquals(task, removedTask);
+        try {
+            Task removedTask = List.remove(0);
+            assertEquals(task, removedTask);
+        } catch (IndexOutOfBoundsException e) {
+            fail();
+        }
     }
 
     @Test
     public void isEmpty_appendAndRemoveTask_returnTrue() {
         Task task = new TaskStub("task");
         List.append(task);
-        List.remove(0);
-        assertTrue(List.isEmpty());
+        try {
+            List.remove(0);
+            assertTrue(List.isEmpty());
+        } catch (IndexOutOfBoundsException e) {
+            fail();
+        }
     }
 
     static class TaskStub extends Task {
