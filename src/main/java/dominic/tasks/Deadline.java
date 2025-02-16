@@ -101,6 +101,19 @@ public class Deadline extends Task {
         return !(this.dateDeadline == null);
     }
 
+    public static Deadline taskStringToDeadline(String taskGiven) throws MissingArgumentException,
+            MissingKeywordException {
+        String deadline = Deadline.getValidDeadline(taskGiven);
+        String task = Deadline.getValidTask(taskGiven);
+        LocalDate dateDeadline;
+        if (DateFormatter.isLocalDate(deadline)) {
+            dateDeadline = DateFormatter.toLocalDate(deadline);
+            return new Deadline(task, dateDeadline);
+        } else {
+            return new Deadline(task, deadline);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
