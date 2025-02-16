@@ -29,7 +29,7 @@ public class Todo extends Task {
         if (input.isEmpty()) {
             throw new MissingArgumentException("Missing argument");
         }
-        return input;
+        return input.trim();
     }
 
     /**

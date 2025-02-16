@@ -130,7 +130,7 @@ public class Event extends Task {
     public static String getValidTask(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             MissingKeywordException {
         Event.checkValidTask(input);
-        return input.substring(0, input.indexOf(" /from "));
+        return input.substring(0, input.indexOf(" /from ")).trim();
     }
 
     /**
@@ -144,7 +144,7 @@ public class Event extends Task {
     public static String getValidFrom(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             MissingKeywordException {
         Event.checkValidTask(input);
-        return input.substring(input.indexOf(" /from ") + 7, input.indexOf(" /to "));
+        return input.substring(input.indexOf(" /from ") + 7, input.indexOf(" /to ")).trim();
     }
 
     /**
@@ -158,7 +158,7 @@ public class Event extends Task {
     public static String getValidTo(String input) throws MissingArgumentException, InvalidKeywordOrderException,
             MissingKeywordException {
         Event.checkValidTask(input);
-        return input.substring(input.indexOf(" /to ") + 5);
+        return input.substring(input.indexOf(" /to ") + 5).trim();
     }
 
     /**

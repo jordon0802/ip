@@ -76,7 +76,7 @@ public class Deadline extends Task {
      */
     public static String getValidTask(String input) throws MissingArgumentException, MissingKeywordException {
         Deadline.checkValidTask(input);
-        return input.substring(0, input.indexOf(" /by "));
+        return input.substring(0, input.indexOf(" /by ")).trim();
     }
 
     /**
@@ -89,7 +89,7 @@ public class Deadline extends Task {
      */
     public static String getValidDeadline(String input) throws MissingArgumentException, MissingKeywordException {
         Deadline.checkValidTask(input);
-        return input.substring(input.indexOf(" /by ") + 5);
+        return input.substring(input.indexOf(" /by ") + 5).trim();
     }
 
     /**
