@@ -1,14 +1,11 @@
 package dominic.commands;
 
-import java.time.LocalDate;
-
 import dominic.exceptions.InvalidDateOrderException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.exceptions.MissingKeywordException;
 import dominic.tasks.Event;
 import dominic.ui.Dominic;
-import dominic.utils.DateFormatter;
 import dominic.utils.List;
 
 /**
@@ -36,27 +33,7 @@ public class EventCommand extends Command {
     @Override
     public String execute() {
         try {
-            String task = Event.getValidTask(super.getArguments());
-            String from = Event.getValidFrom(super.getArguments());
-            String to = Event.getValidTo(super.getArguments());
-            LocalDate dateFrom;
-            LocalDate dateTo;
-            if (DateFormatter.isLocalDate(from) && DateFormatter.isLocalDate(to)) {
-                dateFrom = DateFormatter.toLocalDate(from);
-                dateTo = DateFormatter.toLocalDate(to);
-                if (dateFrom.isAfter(dateTo)) {
-                    throw new InvalidDateOrderException("");
-                }
-                List.append(new Event(task, dateFrom, dateTo));
-            } else if (DateFormatter.isLocalDate(from)) {
-                dateFrom = DateFormatter.toLocalDate(from);
-                List.append(new Event(task, dateFrom, to));
-            } else if (DateFormatter.isLocalDate(to)) {
-                dateTo = DateFormatter.toLocalDate(to);
-                List.append(new Event(task, from, dateTo));
-            } else {
-                List.append(new Event(task, from, to));
-            }
+            List.append(Event.taskStringToEvent(super.getArguments()));
             return Dominic.printRecentlyAdded();
         } catch (MissingKeywordException e) {
             return "When is the event? ";

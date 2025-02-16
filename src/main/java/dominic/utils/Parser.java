@@ -78,7 +78,6 @@ public final class Parser {
                     FindCommand findCommand = new FindCommand(arguments);
                     yield findCommand.execute();
                 }
-                // Invalid Command
                 default -> "Error: Invalid command.";
             };
         } else {

@@ -2,6 +2,7 @@ package dominic.tasks;
 
 import java.time.LocalDate;
 
+import dominic.exceptions.InvalidDateOrderException;
 import dominic.exceptions.InvalidKeywordOrderException;
 import dominic.exceptions.MissingArgumentException;
 import dominic.exceptions.MissingKeywordException;
@@ -179,6 +180,30 @@ public class Event extends Task {
         return !(this.dateTo == null);
     }
 
+    public static Event taskStringToEvent(String taskGiven) throws InvalidDateOrderException,
+            MissingArgumentException, InvalidKeywordOrderException, MissingKeywordException {
+        String task = Event.getValidTask(taskGiven);
+        String from = Event.getValidFrom(taskGiven);
+        String to = Event.getValidTo(taskGiven);
+        LocalDate dateFrom;
+        LocalDate dateTo;
+        if (DateFormatter.isLocalDate(from) && DateFormatter.isLocalDate(to)) {
+            dateFrom = DateFormatter.toLocalDate(from);
+            dateTo = DateFormatter.toLocalDate(to);
+            if (dateFrom.isAfter(dateTo)) {
+                throw new InvalidDateOrderException("");
+            }
+            return new Event(task, dateFrom, dateTo);
+        } else if (DateFormatter.isLocalDate(from)) {
+            dateFrom = DateFormatter.toLocalDate(from);
+            return new Event(task, dateFrom, to);
+        } else if (DateFormatter.isLocalDate(to)) {
+            dateTo = DateFormatter.toLocalDate(to);
+            return new Event(task, from, dateTo);
+        } else {
+            return new Event(task, from, to);
+        }
+    }
     /**
      * {@inheritDoc}
      */
