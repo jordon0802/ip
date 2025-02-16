@@ -49,15 +49,6 @@ public final class List {
     }
 
     /**
-     * Returns the number of tasks in this list.
-     *
-     * @return the number of tasks in the list
-     */
-    public static int getSize() {
-        return List.size;
-    }
-
-    /**
      * Returns the list of tasks as an array.
      *
      * @return the array of tasks
