@@ -82,8 +82,8 @@ public final class StorageReader {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found.");
-        } catch (IOException | MissingArgumentException | MissingKeywordException | InvalidKeywordOrderException |
-                 InvalidFileFormatException | InvalidDateOrderException e) {
+        } catch (IOException | MissingArgumentException | MissingKeywordException | InvalidKeywordOrderException
+                 | InvalidFileFormatException | InvalidDateOrderException e) {
             System.out.println("Error: File corrupted/failed to close file. " + e.getMessage());
         }
     }

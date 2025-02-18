@@ -101,6 +101,14 @@ public class Deadline extends Task {
         return !(this.dateDeadline == null);
     }
 
+    /**
+     * Returns the Deadline as specified by the input task string.
+     *
+     * @param taskGiven task as given in a command format excluding the command keyword.
+     * @return the Deadline specified in {@param taskGiven}
+     * @throws MissingArgumentException If input is empty.
+     * @throws MissingKeywordException If /from or /to keyword is missing.
+     */
     public static Deadline taskStringToDeadline(String taskGiven) throws MissingArgumentException,
             MissingKeywordException {
         String deadline = Deadline.getValidDeadline(taskGiven);

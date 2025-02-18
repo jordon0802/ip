@@ -27,8 +27,12 @@ public class Dominic {
         return "Sup! I'm Dominic!\nWhat can I do for you?\n";
     }
 
+    /**
+     * Initializes the Storage File
+     *
+     * @return task list if, and only if, storage file is initialized, otherwise, error message
+     */
     public static String initialize() {
-        // Initialize Storage File
         boolean success = StorageReader.isInitialized();
         if (!success) {
             return "Failed to initialize storage";
@@ -54,9 +58,8 @@ public class Dominic {
         assert !List.isEmpty() : "List should not be empty";
         Task[] tasks = List.toTaskArray();
         int len = tasks.length;
-        return "Noted, added new task:\n\t" +
-                tasks[len - 1] + "\n" +
-                "Now you have " + len + " task(s) pending.";
+        return "Noted, added new task:\n\t" + tasks[len - 1] + "\n"
+                + "Now you have " + len + " task(s) pending.";
     }
 
     /**
@@ -65,9 +68,8 @@ public class Dominic {
     public static String printRecentlyDeleted(Task task) {
         Task[] tasks = List.toTaskArray();
         int len = tasks.length;
-        return "Got it, deleted task:\n\t" +
-                task.toString() + "\n" +
-                "Now you have " + len + " task(s) pending.";
+        return "Got it, deleted task:\n\t" + task.toString() + "\n"
+                + "Now you have " + len + " task(s) pending.";
     }
 
 

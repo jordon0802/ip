@@ -12,6 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Represents a Main Window.
+ *
+ * @author Jordon Chang
+ * @version v1.0.0-alpha
+ */
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;
@@ -27,6 +33,9 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dominicImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
+    /**
+     * Initialize the main window.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -44,7 +53,7 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         if (userInput.getText().equalsIgnoreCase("bye")) {
             StorageWriter.writeToFile();
-                Platform.exit();
+            Platform.exit();
         }
         String input = userInput.getText();
         String response = Parser.run(userInput.getText());

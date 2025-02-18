@@ -180,6 +180,16 @@ public class Event extends Task {
         return !(this.dateTo == null);
     }
 
+    /**
+     * Returns the Event as specified by the input task string.
+     *
+     * @param taskGiven task as given in a command format excluding the command keyword.
+     * @return the Event specified in {@param taskGiven}
+     * @throws InvalidDateOrderException If /to date is earlier than /from date.
+     * @throws MissingArgumentException If input is empty.
+     * @throws InvalidKeywordOrderException If /to keyword comes before /from keyword.
+     * @throws MissingKeywordException If /from or /to keyword is missing.
+     */
     public static Event taskStringToEvent(String taskGiven) throws InvalidDateOrderException,
             MissingArgumentException, InvalidKeywordOrderException, MissingKeywordException {
         String task = Event.getValidTask(taskGiven);
