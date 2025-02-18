@@ -39,7 +39,7 @@ public final class StorageReader {
         EVENT
     }
 
-    public enum FileChoice {
+    private enum FileChoice {
         DB,
         ARCHIVE
     }
