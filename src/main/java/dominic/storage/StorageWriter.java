@@ -16,6 +16,7 @@ import dominic.utils.List;
  */
 public final class StorageWriter {
     private static final File DB = new File("./data/dominic.txt");
+    private static final File ARCHIVE = new File("./data/dominic-archive.txt");
 
     private StorageWriter() {
     }
@@ -27,7 +28,8 @@ public final class StorageWriter {
         // Delete File
         try {
             boolean deleted = StorageWriter.DB.delete();
-            if (!deleted) {
+            boolean deletedArchive = StorageWriter.ARCHIVE.delete();
+            if (!deleted || !deletedArchive) {
                 System.out.println("Error: File could not be overwritten.");
                 return;
             }
@@ -37,10 +39,16 @@ public final class StorageWriter {
         }
 
         Task[] arr = List.toTaskArray();
+        Task[] archive = List.toArchiveArray();
         // Write File
-        try (BufferedWriter fw = new BufferedWriter(new FileWriter(StorageWriter.DB))) {
+        try {
+            BufferedWriter fw = new BufferedWriter(new FileWriter(StorageWriter.DB));
             for (Task task : arr) {
                 fw.write(task.toFileString());
+            }
+            BufferedWriter fwArchive = new BufferedWriter(new FileWriter(StorageWriter.ARCHIVE));
+            for (Task task : archive) {
+                fwArchive.write(task.toFileString());
             }
         } catch (IOException e) {
             System.out.println("Error: Failed to open/write file");

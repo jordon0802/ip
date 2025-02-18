@@ -12,8 +12,8 @@ import dominic.tasks.Task;
  */
 public final class List {
     private static final LinkedList<Task> archive = new LinkedList<>();
-    private static int archiveSize = 0;
     private static final LinkedList<Task> list = new LinkedList<>();
+    private static int archiveSize = 0;
     private static int size = 0;
 
     private List() {
@@ -27,6 +27,16 @@ public final class List {
     public static void append(Task task) {
         List.list.add(task);
         List.size++;
+    }
+
+    /**
+     * Appends the specified task to the end of the list.
+     *
+     * @param task task to be added to the list
+     */
+    public static void appendArchive(Task task) {
+        List.archive.add(task);
+        List.archiveSize++;
     }
 
     /**
@@ -74,6 +84,16 @@ public final class List {
         }
         List.size--;
         return List.list.remove(index);
+    }
+
+    /**
+     * Returns the list of tasks as an array.
+     *
+     * @return the array of tasks
+     */
+    public static Task[] toArchiveArray() {
+        Task[] archives = new Task[List.archiveSize];
+        return List.archive.toArray(archives);
     }
 
     /**

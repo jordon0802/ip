@@ -26,6 +26,7 @@ import dominic.utils.List;
 public final class StorageReader {
     private static final File DIR = new File("./data/");
     private static final File DB = new File("./data/dominic.txt");
+    private static final File ARCHIVE = new File("./data/dominic-archive.txt");
 
     private enum Mark {
         MARKED,
@@ -36,6 +37,11 @@ public final class StorageReader {
         TODO,
         DEADLINE,
         EVENT
+    }
+
+    public enum FileChoice {
+        DB,
+        ARCHIVE
     }
 
     private StorageReader() {
@@ -62,8 +68,16 @@ public final class StorageReader {
     /**
      * Reads the storage file and populates the list with tasks.
      */
-    private static void fileToList() {
-        try (BufferedReader fr = new BufferedReader(new FileReader(StorageReader.DB))) {
+    private static void fileToList(FileChoice fileChoice) {
+        try {
+            BufferedReader fr;
+            if (fileChoice == FileChoice.DB) {
+                fr = new BufferedReader(new FileReader(StorageReader.DB));
+            } else if (fileChoice == FileChoice.ARCHIVE) {
+                fr = new BufferedReader(new FileReader(StorageReader.ARCHIVE));
+            } else {
+                return;
+            }
             while (fr.ready()) {
                 // Read 3 lines at a time
                 String type = fr.readLine();
@@ -78,7 +92,12 @@ public final class StorageReader {
                 Task t = StorageReader.createTask(taskType, markType, task);
 
                 // Append to list
-                List.append(t);
+                if (fileChoice == FileChoice.DB) {
+                    List.append(t);
+                } else {
+                    List.appendArchive(t);
+                }
+
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found.");
@@ -113,9 +132,10 @@ public final class StorageReader {
     public static boolean isInitialized() {
         try {
             // Case 1: Valid File and Directory
-            if (StorageReader.DIR.isDirectory() && StorageReader.DB.isFile()) {
+            if (StorageReader.DIR.isDirectory() && StorageReader.DB.isFile() && StorageReader.ARCHIVE.isFile()) {
                 // Load file data to dominic.utils.List
-                StorageReader.fileToList();
+                StorageReader.fileToList(FileChoice.DB);
+                StorageReader.fileToList(FileChoice.ARCHIVE);
             }
             // Case 2a: Missing Directory, attempt to Create Directory
             if (!StorageReader.DIR.isDirectory()) {
@@ -139,12 +159,24 @@ public final class StorageReader {
                     System.out.println("Error: dominic.txt already exists.");
                 }
             }
+            // Case 2c: Missing Archive File, attempt to Create File
+            if (!StorageReader.ARCHIVE.isFile()) {
+                System.out.println("dominic-archive.txt not found.");
+                System.out.println("Creating dominic-archive.txt...");
+                boolean result = StorageReader.ARCHIVE.createNewFile();
+                if (result) {
+                    System.out.println("dominic-archive.txt created.");
+                } else {
+                    System.out.println("Error: dominic-archive.txt already exists.");
+                }
+            }
             return true;
         } catch (SecurityException e) {
-            System.out.println("Error: Failed to read/create data directory and/or dominic.txt file.");
+            System.out.println("Error: Failed to read/create data directory, dominic.txt and/or "
+                    + "dominic-archive.txt file.");
             return false;
         } catch (IOException e) {
-            System.out.println("Error: IOException while creating dominic.txt file.");
+            System.out.println("Error: IOException while creating dominic.txt or dominic-archive.txt file.");
             return false;
         }
     }
