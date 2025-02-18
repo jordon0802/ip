@@ -63,6 +63,16 @@ public class Dominic {
     }
 
     /**
+     * Prints a message on the last archived task as well as the total tasks left in the list.
+     */
+    public static String printRecentlyArchived(Task task) {
+        Task[] tasks = List.toTaskArray();
+        int len = tasks.length;
+        return "Got it, archived task:\n\t" + task.toString() + "\n"
+                + "Now you have " + len + " task(s) pending.";
+    }
+
+    /**
      * Prints a message on the last removed task as well as the total tasks left in the list.
      */
     public static String printRecentlyDeleted(Task task) {

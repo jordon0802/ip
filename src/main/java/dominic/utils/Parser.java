@@ -3,6 +3,7 @@ package dominic.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dominic.commands.ArchiveCommand;
 import dominic.commands.ByeCommand;
 import dominic.commands.DeadlineCommand;
 import dominic.commands.DeleteCommand;
@@ -77,6 +78,10 @@ public final class Parser {
                 case FindCommand.COMMAND -> {
                     FindCommand findCommand = new FindCommand(arguments);
                     yield findCommand.execute();
+                }
+                case ArchiveCommand.COMMAND -> {
+                    ArchiveCommand archiveCommand = new ArchiveCommand(arguments);
+                    yield archiveCommand.execute();
                 }
                 default -> "Error: Invalid command.";
             };

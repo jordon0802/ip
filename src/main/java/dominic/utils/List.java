@@ -11,6 +11,8 @@ import dominic.tasks.Task;
  * @version v1.0.0-alpha
  */
 public final class List {
+    private static final LinkedList<Task> archive = new LinkedList<>();
+    private static int archiveSize = 0;
     private static final LinkedList<Task> list = new LinkedList<>();
     private static int size = 0;
 
@@ -28,6 +30,28 @@ public final class List {
     }
 
     /**
+     * Archives the task at the specified position in the list.
+     *
+     * @param task the task to be archived
+     * @throws IndexOutOfBoundsException If input index is less than 0, more than or equals to the size of the list.
+     */
+    public static void archive(Task task) throws IndexOutOfBoundsException {
+        List.archive.add(task);
+        List.archiveSize++;
+    }
+
+    /**
+     * Archives the entire list.
+     */
+    public static void archiveAll() {
+        while (!List.list.isEmpty()) {
+            List.archive.add(List.list.removeFirst());
+            List.size--;
+            List.archiveSize++;
+        }
+    }
+
+    /**
      * Returns true if, and only if, size is 0.
      *
      * @return true if the {@code getSize()} is 0, otherwise false
@@ -42,6 +66,7 @@ public final class List {
      *
      * @param index the index of the task to be removed
      * @return the task that was removed from the list
+     * @throws IndexOutOfBoundsException If input index is less than 0, more than or equals to the size of the list.
      */
     public static Task remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= List.list.size()) {
