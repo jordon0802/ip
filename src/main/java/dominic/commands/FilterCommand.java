@@ -59,6 +59,9 @@ public class FilterCommand extends Command {
                     }
                 }
             }
+            if (message.isEmpty()) {
+                message.append("You have no tasks that fall on ").append(DateFormatter.dateToString(date));
+            }
             return message.toString();
         } else {
             return "Error: Invalid date format.";
