@@ -45,7 +45,7 @@ public class Dominic {
         // List current tasks, if any
         if (!List.isEmpty()) {
             ListCommand listCommand = new ListCommand("");
-            message.append("Here are your current tasks sir:\n");
+            message.append("\nHere are your current tasks sir:\n");
             message.append(listCommand.execute());
         }
         return message.toString();
