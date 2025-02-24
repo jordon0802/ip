@@ -48,6 +48,9 @@ public class FindCommand extends Command {
                 index++;
             }
         }
+        if (message.isEmpty()) {
+            message.append("You have no tasks that contains ").append(super.getArguments());
+        }
         return message.toString();
     }
 }
