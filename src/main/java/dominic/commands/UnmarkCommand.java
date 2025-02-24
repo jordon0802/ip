@@ -31,7 +31,7 @@ public class UnmarkCommand extends Command {
             int idx = Integer.parseInt(super.getArguments());
             Task[] tasks = List.toTaskArray();
             tasks[idx - 1].setUnMarked();
-            return "Ok, bet, unmarked it:\n" + tasks[idx - 1];
+            return "Ok, bet, unmarked it:\n\t" + tasks[idx - 1];
         } catch (NumberFormatException e) {
             return "Error: Invalid arguments.";
         } catch (ArrayIndexOutOfBoundsException e) {
