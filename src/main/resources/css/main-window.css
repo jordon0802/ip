@@ -6,6 +6,8 @@
 .text-field {
     -fx-background-color: #fafafb;
     -fx-font: 20px "Arial";
+    -fx-prompt-text-fill: grey;
+    ;
 }
 
 .button {

@@ -34,8 +34,8 @@ public class Dominic {
      */
     public static String initialize() {
         boolean success = StorageReader.isInitialized();
-        if (!success) {
-            return "Failed to initialize storage";
+        while (!success) {
+            success = StorageReader.isInitialized();
         }
 
         StringBuilder message = new StringBuilder();

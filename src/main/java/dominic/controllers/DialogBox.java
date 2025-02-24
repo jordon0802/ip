@@ -32,9 +32,14 @@ public class DialogBox extends HBox {
      * @param message message to be displayed.
      * @param image image to be displayed.
      */
-    public DialogBox(String message, Image image) {
+    public DialogBox(String message, Image image, boolean isUser) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            FXMLLoader fxmlLoader;
+            if (isUser) {
+                fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/UserDialogBox.fxml"));
+            } else {
+                fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DominicDialogBox.fxml"));
+            }
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
@@ -65,7 +70,7 @@ public class DialogBox extends HBox {
      * @return the DialogBox constructed
      */
     public static DialogBox getUserDialog(String message, Image image) {
-        return new DialogBox(message, image);
+        return new DialogBox(message, image, true);
     }
 
     /**
@@ -76,7 +81,7 @@ public class DialogBox extends HBox {
      * @return the DialogBox constructed.
      */
     public static DialogBox getDominicDialog(String message, Image image) {
-        var db = new DialogBox(message, image);
+        var db = new DialogBox(message, image, false);
         db.flip();
         return db;
     }
