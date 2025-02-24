@@ -12,7 +12,7 @@ import dominic.utils.List;
  * A utility class that writes to the storage file.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public final class StorageWriter {
     private static final File DB = new File("./data/dominic.txt");

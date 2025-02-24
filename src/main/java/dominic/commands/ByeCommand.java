@@ -4,7 +4,7 @@ package dominic.commands;
  * Represents the bye command.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class ByeCommand extends Command {
     /** Command keyword. */

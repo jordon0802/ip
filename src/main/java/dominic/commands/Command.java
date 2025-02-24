@@ -4,7 +4,7 @@ package dominic.commands;
  * Abstract class for all commands.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public abstract class Command {
     private final String arguments;

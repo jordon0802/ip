@@ -10,7 +10,7 @@ import dominic.utils.List;
  * Dominic, a personal assistant chatbot that helps to keep track of tasks.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class Dominic {
     /**

@@ -8,7 +8,7 @@ import dominic.tasks.Task;
  * A utility class that stores Task objects.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public final class List {
     private static final LinkedList<Task> archive = new LinkedList<>();

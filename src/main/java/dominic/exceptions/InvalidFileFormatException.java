@@ -4,7 +4,7 @@ package dominic.exceptions;
  * Exception thrown when storage file contains invalid content.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class InvalidFileFormatException extends Exception {
     /**

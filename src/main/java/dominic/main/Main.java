@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * The Main class to load the UI
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class Main extends Application {
     private final Dominic dominic = new Dominic();

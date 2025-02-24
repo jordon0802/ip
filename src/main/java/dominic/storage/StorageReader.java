@@ -21,7 +21,7 @@ import dominic.utils.List;
  * A utility class that initialize and reads from the storage file.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public final class StorageReader {
     private static final File DIR = new File("./data/");

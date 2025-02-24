@@ -7,7 +7,7 @@ import dominic.utils.List;
  * Represents the list command.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class ListCommand extends Command {
     /** Command keyword. */

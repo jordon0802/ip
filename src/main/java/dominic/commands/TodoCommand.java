@@ -9,7 +9,7 @@ import dominic.utils.List;
  * Represents the todo command.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class TodoCommand extends Command {
     /** Command keyword. */

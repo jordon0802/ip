@@ -12,7 +12,7 @@ import dominic.utils.DateFormatter;
  * Represents an Event.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class Event extends Task {
     private final String stringFrom;

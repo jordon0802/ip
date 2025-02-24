@@ -19,7 +19,7 @@ import dominic.commands.UnmarkCommand;
  * A utility class that parses user input.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public final class Parser {
     private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<command>\\w+)(?<arguments>.*)");

@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
  * A utility class that provide methods for the LocalDate class.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public final class DateFormatter {
     private DateFormatter() {

@@ -4,7 +4,7 @@ package dominic.exceptions;
  * Exception thrown when dates are used in the wrong order.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class InvalidDateOrderException extends Exception {
     /**

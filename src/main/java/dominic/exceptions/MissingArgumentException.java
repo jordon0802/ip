@@ -4,7 +4,7 @@ package dominic.exceptions;
  * Exception thrown when argument(s) are missing in the user input.
  *
  * @author Jordon Chang
- * @version v1.0.0-alpha
+ * @version v1.0
  */
 public class MissingArgumentException extends Exception {
     /**

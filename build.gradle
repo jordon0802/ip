@@ -53,7 +53,7 @@ application {
 shadowJar {
     archiveBaseName = "dominic"
     archiveClassifier = null
-    archiveVersion = "v1.0.0-alpha"
+    archiveVersion = "v1.0"
 }
 
 run{
