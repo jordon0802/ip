@@ -8,6 +8,7 @@ Dominic, your personal task management chatbot assistant
 
 Add anything that you will need to do
 
+Format: `todo TASK`\
 Example: `todo do laundry`
 ```
 Noted, added new task:
@@ -19,6 +20,7 @@ Now you have 1 task(s) pending.
 
 Add anything you need to do that has a deadline
 
+Format: `deadline TASK /by DEADLINE`\
 Example: `deadline watch lecture /by tmr`
 ```
 Noted, added new task:
@@ -30,6 +32,7 @@ Now you have 2 task(s) pending.
 
 Add an event which has a start and end date
 
+Format: `event TASK /from EVENT_START /to EVENT_END`\
 Example: `event cca camp /from 2025-03-02 /to 2025-03-07`
 ```
 Noted, added new task:
@@ -41,6 +44,7 @@ Now you have 3 task(s) pending.
 
 Marks a task as completed
 
+Format: `mark INDEX`\
 Example: `mark 2`
 ```
 Ok, bet, marked it:
@@ -51,6 +55,7 @@ Ok, bet, marked it:
 
 Unmark a task
 
+Format: `unmark INDEX`\
 Example: `unmark 2`
 ```
 Ok, bet, marked it:
@@ -61,6 +66,7 @@ Ok, bet, marked it:
 
 List all tasks
 
+Format: `list`\
 Example: `list`
 ```
 1.[T] [ ] do laundry
@@ -72,6 +78,7 @@ Example: `list`
 
 Delete a task
 
+Format: `delete INDEX`\
 Example: `delete 1`
 ```
 Got it, deleted task:
@@ -83,6 +90,7 @@ Now you have 2 task(s) pending.
 
 Archives a task/all tasks
 
+Format: `archive INDEX`\
 Example 1: `archive 1`
 ```
 Got it, archived task:
@@ -99,6 +107,7 @@ All tasks have been archived.
 
 Find tasks that contain a certain substring
 
+Format: `find SUBSTRING`\
 Example: `find cs`
 ```
 1.[T] [ ] do cs2106 assignment
@@ -110,6 +119,7 @@ Example: `find cs`
 
 Filter tasks that fall on a certain date
 
+Format: `filter DATE`
 Example: `filter 2025-03-02`
 ```
 1.[D] [ ] watch cs2103t briefing (by: Mar 02 2025)
