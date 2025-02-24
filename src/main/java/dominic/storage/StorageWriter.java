@@ -46,10 +46,12 @@ public final class StorageWriter {
             for (Task task : arr) {
                 fw.write(task.toFileString());
             }
+            fw.close();
             BufferedWriter fwArchive = new BufferedWriter(new FileWriter(StorageWriter.ARCHIVE));
             for (Task task : archive) {
                 fwArchive.write(task.toFileString());
             }
+            fwArchive.close();
         } catch (IOException e) {
             System.out.println("Error: Failed to open/write file");
         }
