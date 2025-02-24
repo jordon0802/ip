@@ -10,6 +10,7 @@ import dominic.commands.DeleteCommand;
 import dominic.commands.EventCommand;
 import dominic.commands.FilterCommand;
 import dominic.commands.FindCommand;
+import dominic.commands.HelpCommand;
 import dominic.commands.ListCommand;
 import dominic.commands.MarkCommand;
 import dominic.commands.TodoCommand;
@@ -82,6 +83,10 @@ public final class Parser {
                 case ArchiveCommand.COMMAND -> {
                     ArchiveCommand archiveCommand = new ArchiveCommand(arguments);
                     yield archiveCommand.execute();
+                }
+                case HelpCommand.COMMAND -> {
+                    HelpCommand helpCommand = new HelpCommand(arguments);
+                    yield helpCommand.execute();
                 }
                 default -> "Error: Invalid command.";
             };
