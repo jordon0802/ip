@@ -25,9 +25,10 @@ public class HelpCommand extends Command {
                 + "5. mark INDEX - marks a task\n"
                 + "6. unmark INDEX - unmarks a task\n"
                 + "7. delete INDEX - deletes a task\n"
-                + "8. find SUBSTRING - finds a task containing the substring\n"
-                + "9. filter DATE - lists task that fall on that date (note: dates to be in yyyy-mm-dd format)\n"
-                + "10. help - list this command list\n"
-                + "11. bye - quits the program";
+                + "8. archive INDEX - archives a task\n"
+                + "9. find SUBSTRING - finds a task containing the substring\n"
+                + "10. filter DATE - lists task that fall on that date (note: dates to be in yyyy-mm-dd format)\n"
+                + "11. help - list this command list\n"
+                + "12. bye - quits the program";
     }
 }
