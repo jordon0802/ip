@@ -54,6 +54,7 @@ public class MainWindow extends AnchorPane {
         if (userInput.getText().equalsIgnoreCase("bye")) {
             StorageWriter.writeToFile();
             Platform.exit();
+            return;
         }
         String input = userInput.getText();
         String response = Parser.run(userInput.getText());

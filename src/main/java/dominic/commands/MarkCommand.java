@@ -31,7 +31,7 @@ public class MarkCommand extends Command {
             int idx = Integer.parseInt(super.getArguments());
             Task[] tasks = List.toTaskArray();
             tasks[idx - 1].setMarked();
-            return "Ok, bet, marked it:\n" + tasks[idx - 1];
+            return "Ok, bet, marked it:\n\t" + tasks[idx - 1];
         } catch (NumberFormatException e) {
             return "Error: Invalid arguments.";
         } catch (ArrayIndexOutOfBoundsException e) {
