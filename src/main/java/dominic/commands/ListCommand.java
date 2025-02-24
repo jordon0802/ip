@@ -36,6 +36,9 @@ public class ListCommand extends Command {
                     .append(tasks[i - 1])
                     .append("\n");
         }
+        if (message.isEmpty()) {
+            message.append("You have no tasks!!");
+        }
         return message.toString();
     }
 }
