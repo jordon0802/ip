@@ -6,7 +6,7 @@ import dominic.exceptions.MissingArgumentException;
  * Represents a Todo.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class Todo extends Task {
     /**

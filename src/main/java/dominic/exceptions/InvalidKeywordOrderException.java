@@ -4,7 +4,7 @@ package dominic.exceptions;
  * Exception thrown when keyword(s) are used in the wrong order.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class InvalidKeywordOrderException extends Exception {
     /**

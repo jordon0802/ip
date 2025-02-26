@@ -8,7 +8,7 @@ import dominic.utils.List;
  * Represents the delete command.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class DeleteCommand extends Command {
     /** Command keyword. */

@@ -8,7 +8,7 @@ import dominic.utils.List;
  * Represents the archive command.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class ArchiveCommand extends Command {
     /** Command keyword. */

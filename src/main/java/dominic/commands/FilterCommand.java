@@ -12,7 +12,7 @@ import dominic.utils.List;
  * Represents the filter command.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class FilterCommand extends Command {
     /** Command keyword */

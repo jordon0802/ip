@@ -7,7 +7,7 @@ import javafx.application.Application;
  * Launcher class for JavaFX
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class Launcher {
     /**

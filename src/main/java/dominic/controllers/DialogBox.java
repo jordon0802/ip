@@ -18,7 +18,7 @@ import javafx.scene.layout.HBox;
  * Represents a Dialog Box
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class DialogBox extends HBox {
     @FXML

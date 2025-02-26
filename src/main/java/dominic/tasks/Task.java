@@ -8,7 +8,7 @@ import dominic.exceptions.MissingKeywordException;
  * Abstract representation of a basic task.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public abstract class Task {
     private final String task;

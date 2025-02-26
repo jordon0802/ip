@@ -7,7 +7,7 @@ import dominic.utils.List;
  * Represents the unmark command.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class UnmarkCommand extends Command {
     /** Command keyword. */

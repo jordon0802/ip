@@ -10,7 +10,7 @@ import dominic.utils.DateFormatter;
  * Represents a Deadline.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class Deadline extends Task {
     private final String stringDeadline;

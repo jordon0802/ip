@@ -16,7 +16,7 @@ import javafx.stage.WindowEvent;
  * The Main class to load the UI
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class Main extends Application {
     private final Dominic dominic = new Dominic();

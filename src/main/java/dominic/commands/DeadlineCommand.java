@@ -10,7 +10,7 @@ import dominic.utils.List;
  * Represents the bye command.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class DeadlineCommand extends Command {
     /**

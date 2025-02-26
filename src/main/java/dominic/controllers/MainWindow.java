@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
  * Represents a Main Window.
  *
  * @author Jordon Chang
- * @version v1.0
+ * @version v1.1
  */
 public class MainWindow extends AnchorPane {
     @FXML
