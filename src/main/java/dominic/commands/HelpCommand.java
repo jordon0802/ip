@@ -1,5 +1,11 @@
 package dominic.commands;
 
+/**
+ * Represents the help command.
+ *
+ * @author Jordon Chang
+ * @version v1.0
+ */
 public class HelpCommand extends Command {
     /** Command keyword. */
     public static final String COMMAND = "help";
